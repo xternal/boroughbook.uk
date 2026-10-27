@@ -181,6 +181,14 @@
     "sha256": "f7fdd0066a08544f45ab502bdf8736359107f4e39584a9ca9129926578e67897"
    },
    {
+    "id": "foi_weekly_bins_2026-10-27",
+    "title": "Cost of weekly household rubbish collections (the council's Freedom of Information answer, reference 27548393, 27 October 2026)",
+    "publisher": "London Borough of Hammersmith & Fulham, via WhatDoTheyKnow",
+    "url": "https://www.whatdotheyknow.com/request/cost_of_weekly_household_rubbish#incoming-3609253",
+    "asset_url": "https://www.whatdotheyknow.com/request/cost_of_weekly_household_rubbish/response/3609253/attach/3/Response%20all%20information%20to%20be%20supplied.pdf",
+    "sha256": "44beb01cdafaa2d2768830ef99329ffb21b5101a5d71092991cb3d5f8cef17e1"
+   },
+   {
     "id": "cabinet_pack_2026-02-09",
     "title": "Cabinet 9 February 2026, public reports pack (includes budget Appendix B, medium term financial strategy, pages 51 to 60, and Appendix C, investment and savings proposals, pages 61 to 66)",
     "publisher": "London Borough of Hammersmith & Fulham",
@@ -1680,6 +1688,15 @@
   ],
   "toggles": [
    {
+    "id": "weekly_bins",
+    "label": "Keep weekly rubbish collections",
+    "on": true,
+    "cost_m": 1.05,
+    "quality": "modelled",
+    "source_id": "foi_weekly_bins_2026-10-27",
+    "method_note": "Half of the £2.1m the council budgeted in 2025/26 to collect household rubbish (not recycling or food waste), told to us in a Freedom of Information answer on 27 October 2026 (reference 27548393). Collecting fortnightly would roughly halve the rounds; the real saving is likely smaller, as recycling usually rises. The council says it has never estimated the saving."
+   },
+   {
     "id": "extra_officers",
     "label": "Add 20 law enforcement officers",
     "on": false,
@@ -1693,11 +1710,6 @@
    {
     "id": "free_home_care",
     "label": "Keep free home care for older residents",
-    "todo": "TODO(source): cost from the budget report or a costed pledge"
-   },
-   {
-    "id": "weekly_bins",
-    "label": "Keep weekly rubbish collections",
     "todo": "TODO(source): cost from the budget report or a costed pledge"
    },
    {

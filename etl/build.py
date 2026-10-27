@@ -484,7 +484,8 @@ def manual_savings() -> List[Dict[str, Any]]:
 
 
 def manual_toggles(toggles: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """Toggle costs from data/manual/toggles_2027-28.csv where extracted or modelled from the budget report."""
+    """Toggle costs from data/manual/toggles_2027-28.csv where extracted or modelled from the budget report, or from
+    another registered source (a Freedom of Information answer) named in source_id, which has no page."""
     path = ROOT / "data" / "manual" / "toggles_2027-28.csv"
     over = {r["id"]: r for r in read_csv(path.name)} if path.exists() else {}
     ids = {t["id"] for t in toggles}
@@ -493,9 +494,11 @@ def manual_toggles(toggles: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     for t in toggles:
         if t["id"] in over:
             r = over[t["id"]]
+            src = r.get("source_id") or "budget_report"
+            check(src in {s["id"] for s in load_sources()}, f"toggles_2027-28.csv {t['id']}: unknown source {src}")
             t = {k: v for k, v in t.items() if k != "todo"}
-            t.update(cost_m=float(r["cost_m"]), quality=r["quality"], source_id="budget_report",
-                     method_note=f"Budget report, PDF page {r['page']}: {r['method_note']}")
+            t.update(cost_m=float(r["cost_m"]), quality=r["quality"], source_id=src,
+                     method_note=f"Budget report, PDF page {r['page']}: {r['method_note']}" if src == "budget_report" else r["method_note"])
         out.append(t)
     return out
 

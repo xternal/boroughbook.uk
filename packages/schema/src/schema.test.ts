@@ -200,7 +200,7 @@ describe("quality", () => {
   it("lists every test value in the seed", () => {
     const list = listTestValues(DATA);
     expect(list).toEqual([]); // switches without a sourced cost are held back, not shown (next_year.pending_toggles)
-    expect(DATA.council.next_year.pending_toggles.map((t) => t.id)).toEqual(["free_home_care", "weekly_bins", "library_hours"]);
+    expect(DATA.council.next_year.pending_toggles.map((t) => t.id)).toEqual(["free_home_care", "library_hours"]);
     expect(list).not.toContain("next_year.levers.fees");
     expect(list).not.toContain("next_year.reserves.minimum_safe");
     expect(list.some((x) => x.startsWith("promises."))).toBe(false); // test cards are gone

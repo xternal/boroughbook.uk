@@ -1,2 +1,3 @@
-id,cost_m,quality,page,method_note
-extra_officers,1.28,modelled,23,"20 officers at the average cost of the Law Enforcement Team, which costs £4.6m a year for 72 officers"
+id,cost_m,quality,page,method_note,source_id
+extra_officers,1.28,modelled,23,"20 officers at the average cost of the Law Enforcement Team, which costs £4.6m a year for 72 officers",
+weekly_bins,1.05,modelled,,"Half of the £2.1m the council budgeted in 2025/26 to collect household rubbish (not recycling or food waste), told to us in a Freedom of Information answer on 27 October 2026 (reference 27548393). Collecting fortnightly would roughly halve the rounds; the real saving is likely smaller, as recycling usually rises. The council says it has never estimated the saving.",foi_weekly_bins_2026-10-27

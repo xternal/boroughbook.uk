@@ -106,6 +106,37 @@ class ManualSavings(unittest.TestCase):
             self._run(self.HEAD + "a,Corp,,Thing,-100,-100,service,,1\nt,Corp,,Total,-150,-100,total,,1\n")
 
 
+class ManualToggles(unittest.TestCase):
+    """A switch's cost comes from the budget report by page, or from another registered source such as an FOI answer."""
+
+    SEED = [{"id": "a", "label": "A", "cost_m": 9, "quality": "test", "source_id": "prototype_test", "todo": "TODO(source)"},
+            {"id": "b", "label": "B", "cost_m": 9, "quality": "test", "source_id": "prototype_test", "todo": "TODO(source)"}]
+
+    def _run(self, csv_text: str):
+        import build  # noqa: WPS433
+
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / "data" / "manual").mkdir(parents=True)
+            (root / "data" / "manual" / "toggles_2027-28.csv").write_text(csv_text)
+            sources = [{"id": "budget_report"}, {"id": "foi_x"}]
+            with mock.patch.object(build, "ROOT", root), mock.patch.object(extract, "MANUAL", root / "data" / "manual"), \
+                    mock.patch.object(build, "load_sources", return_value=sources):
+                return build.manual_toggles([dict(t) for t in self.SEED])
+
+    HEAD = "id,cost_m,quality,page,method_note,source_id\n"
+
+    def test_cites_the_report_page_or_the_named_source(self) -> None:
+        a, b = self._run(self.HEAD + "a,1.5,modelled,23,From the report,\nb,1.05,modelled,,Half the FOI cost,foi_x\n")
+        self.assertEqual((a["source_id"], a["method_note"]), ("budget_report", "Budget report, PDF page 23: From the report"))
+        self.assertEqual((b["source_id"], b["method_note"], b["cost_m"]), ("foi_x", "Half the FOI cost", 1.05))
+        self.assertNotIn("todo", b)
+
+    def test_refuses_an_unknown_source(self) -> None:
+        with self.assertRaises(extract.CheckFailed):
+            self._run(self.HEAD + "a,1,modelled,,Note,nowhere\n")
+
+
 class ManualGap(unittest.TestCase):
     """The hand-extracted waterfall must add up to the report's own gap and close to zero."""
 
