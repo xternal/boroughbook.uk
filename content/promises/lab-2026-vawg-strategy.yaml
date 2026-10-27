@@ -1,0 +1,20 @@
+id: "lab-2026-vawg-strategy"
+actor:
+  kind: "party"
+  id: "labour"
+made_on: "2026-05-01"
+venue: "manifesto"
+area: "Community safety"
+versions:
+  - text: "Refresh our Violence Against Women and Girls Strategy, enforce our PSPO on street sexual harassment, and protect our unique Specialist Domestic Abuse Courts, the only ones of their kind in the country."
+    recorded_on: "2026-10-27"
+    source_url: "https://hflabour.com/wp-content/uploads/2026/05/HF-manifesto-EXEC.pdf"
+    page: 4
+status: "promised"
+deadline: null
+events:
+  - date: "2026-05-01"
+    type: "promised"
+    text: "In the 2026 Labour manifesto, page 4; not one of its headline pledges"
+replies: []
+editor_check_required: true

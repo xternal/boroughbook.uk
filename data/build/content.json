@@ -1132,6 +1132,64 @@
  },
  "promises": [
   {
+   "id": "con-2026-cctv-estates",
+   "actor": {
+    "kind": "party",
+    "id": "conservative"
+   },
+   "made_on": "2026-03-16",
+   "venue": "manifesto",
+   "area": "Community safety",
+   "versions": [
+    {
+     "text": "We will expand the roll-out of CCTV on housing estates and support community groups who want to introduce CCTV in their residential streets.",
+     "recorded_on": "2026-10-27",
+     "source_url": "https://www.hfconservatives.org.uk/sites/www.hfconservatives.org.uk/files/2026-03/Conservative%20Manifesto%20-%20LBHF%202026.pdf",
+     "page": 5
+    }
+   ],
+   "status": "not_in_power",
+   "deadline": null,
+   "events": [
+    {
+     "date": "2026-03-16",
+     "type": "promised",
+     "text": "In the 2026 Conservative manifesto, page 5; not one of its key commitments"
+    }
+   ],
+   "replies": [],
+   "editor_check_required": true
+  },
+  {
+   "id": "con-2026-cctv-monitoring",
+   "actor": {
+    "kind": "party",
+    "id": "conservative"
+   },
+   "made_on": "2026-03-16",
+   "venue": "manifesto",
+   "area": "Community safety",
+   "versions": [
+    {
+     "text": "We will expand the power of CCTV monitoring of our borough and increase the number of officers monitoring that CCTV.",
+     "recorded_on": "2026-10-27",
+     "source_url": "https://www.hfconservatives.org.uk/sites/www.hfconservatives.org.uk/files/2026-03/Conservative%20Manifesto%20-%20LBHF%202026.pdf",
+     "page": 5
+    }
+   ],
+   "status": "not_in_power",
+   "deadline": null,
+   "events": [
+    {
+     "date": "2026-03-16",
+     "type": "promised",
+     "text": "In the 2026 Conservative manifesto, page 5; not one of its key commitments"
+    }
+   ],
+   "replies": [],
+   "editor_check_required": true
+  },
+  {
    "id": "con-2026-developments",
    "actor": {
     "kind": "party",
@@ -1729,6 +1787,35 @@
    "editor_check_required": false
   },
   {
+   "id": "lab-2026-gangs-unit",
+   "actor": {
+    "kind": "party",
+    "id": "labour"
+   },
+   "made_on": "2026-05-01",
+   "venue": "manifesto",
+   "area": "Community safety",
+   "versions": [
+    {
+     "text": "Continue to grow our Gangs, Violence and Exploitation Unit, with early intervention for vulnerable young people and targeted action against specific gangs.",
+     "recorded_on": "2026-10-27",
+     "source_url": "https://hflabour.com/wp-content/uploads/2026/05/HF-manifesto-EXEC.pdf",
+     "page": 4
+    }
+   ],
+   "status": "promised",
+   "deadline": null,
+   "events": [
+    {
+     "date": "2026-05-01",
+     "type": "promised",
+     "text": "In the 2026 Labour manifesto, page 4; not one of its headline pledges"
+    }
+   ],
+   "replies": [],
+   "editor_check_required": true
+  },
+  {
    "id": "lab-2026-green-investment",
    "actor": {
     "kind": "party",
@@ -1964,6 +2051,35 @@
    ],
    "replies": [],
    "editor_check_required": false
+  },
+  {
+   "id": "lab-2026-vawg-strategy",
+   "actor": {
+    "kind": "party",
+    "id": "labour"
+   },
+   "made_on": "2026-05-01",
+   "venue": "manifesto",
+   "area": "Community safety",
+   "versions": [
+    {
+     "text": "Refresh our Violence Against Women and Girls Strategy, enforce our PSPO on street sexual harassment, and protect our unique Specialist Domestic Abuse Courts, the only ones of their kind in the country.",
+     "recorded_on": "2026-10-27",
+     "source_url": "https://hflabour.com/wp-content/uploads/2026/05/HF-manifesto-EXEC.pdf",
+     "page": 4
+    }
+   ],
+   "status": "promised",
+   "deadline": null,
+   "events": [
+    {
+     "date": "2026-05-01",
+     "type": "promised",
+     "text": "In the 2026 Labour manifesto, page 4; not one of its headline pledges"
+    }
+   ],
+   "replies": [],
+   "editor_check_required": true
   }
  ],
  "decision_links": [
