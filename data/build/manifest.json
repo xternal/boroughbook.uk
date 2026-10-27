@@ -97,6 +97,11 @@
    "sha256": "f7fdd0066a08544f45ab502bdf8736359107f4e39584a9ca9129926578e67897"
   },
   {
+   "id": "foi_weekly_bins_2026-10-27",
+   "file": "foi_weekly_bins_2026-10-27.pdf",
+   "sha256": "44beb01cdafaa2d2768830ef99329ffb21b5101a5d71092991cb3d5f8cef17e1"
+  },
+  {
    "id": "cabinet_pack_2026-02-09",
    "file": "cabinet_pack_2026-02-09.pdf",
    "sha256": "2441bc16a320a9c6b7e0dce11d6890c23ede25bd7f1830db517f61b785d630ce"
@@ -379,7 +384,7 @@
   },
   {
    "file": "data/manual/toggles_2027-28.csv",
-   "sha256": "57ebbc574e5a8e8ef175b161c2b5c66d4a6528990e01012f04e1de795e430c5b"
+   "sha256": "4668dff4cc78f0b9703f2ba375ca231fcb85b14537ebafa85d1e49358fe0a920"
   },
   {
    "file": "data/manual/town_councils_2026-27.csv",
@@ -397,12 +402,12 @@
  "outputs": [
   {
    "file": "data/build/hf_2026-27.json",
-   "sha256": "8f345e766a2ffaaa7e6496938ef5d262e8150121edc4d31ab65982b147304309"
+   "sha256": "893a9e84f9465268b46485f4245aa52b841f1d94474670a931c3e3935a6950dc"
   }
  ],
  "quality_counts": {
   "approx": 9,
-  "modelled": 3,
+  "modelled": 4,
   "sourced": 70
  }
 }

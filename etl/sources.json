@@ -276,6 +276,17 @@
    "manual": true
   },
   {
+   "id": "foi_weekly_bins_2026-10-27",
+   "title": "Cost of weekly household rubbish collections (the council's Freedom of Information answer, reference 27548393, 27 October 2026)",
+   "publisher": "London Borough of Hammersmith & Fulham, via WhatDoTheyKnow",
+   "url": "https://www.whatdotheyknow.com/request/cost_of_weekly_household_rubbish#incoming-3609253",
+   "asset_url": "https://www.whatdotheyknow.com/request/cost_of_weekly_household_rubbish/response/3609253/attach/3/Response%20all%20information%20to%20be%20supplied.pdf",
+   "file": "foi_weekly_bins_2026-10-27.pdf",
+   "sha256": "44beb01cdafaa2d2768830ef99329ffb21b5101a5d71092991cb3d5f8cef17e1",
+   "manual": true,
+   "note": "WhatDoTheyKnow refuses scripts; the hash was taken in a browser on 27 October 2026."
+  },
+  {
    "id": "cabinet_pack_2026-02-09",
    "title": "Cabinet 9 February 2026, public reports pack (includes budget Appendix B, medium term financial strategy, pages 51 to 60, and Appendix C, investment and savings proposals, pages 61 to 66)",
    "publisher": "London Borough of Hammersmith & Fulham",

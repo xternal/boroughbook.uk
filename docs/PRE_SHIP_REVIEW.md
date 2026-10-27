@@ -89,6 +89,8 @@ The project owner decided to publish the site as a public alpha at https://borou
 
 To publish with no test values, the three "Balance it" switches without a sourced cost (free home care, weekly bins, library hours) are held back and named on the page as coming later. The two free home care cards no longer link to a switch until it returns. Production builds now pass the gate, which still blocks any test value from reaching them.
 
+On 27 October 2026 weekly bins came back, with a modelled cost: half the £2.1m household rubbish collection cost from the council's FOI answer (reference 27548393), which also says the council has never estimated the saving. Free home care and library hours stay held back.
+
 Still open before calling it a launch: B5 and B6 (legal), the editor checks, the human checks of the mapping tables, the Conservative manifesto archive link and B3.
 
 ## Payments mapping signed off (7 Oct 2026)

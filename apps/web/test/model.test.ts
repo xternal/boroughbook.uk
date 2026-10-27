@@ -76,6 +76,6 @@ describe("page model", () => {
 
   it("carries no test data, so production can build", () => {
     expect(m.hasTestData).toBe(false);
-    expect(m.balance.pendingToggles).toEqual(["Keep free home care for older residents", "Keep weekly rubbish collections", "Keep library opening hours"]);
+    expect(m.balance.pendingToggles).toEqual(["Keep free home care for older residents", "Keep library opening hours"]);
   });
 });
