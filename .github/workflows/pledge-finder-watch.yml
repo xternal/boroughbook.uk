@@ -1,9 +1,10 @@
 name: Pledge finder watch
 
-# The pledge finder runs as a scheduled task on the owner's computer (docs/PLEDGE_FINDER.md), so a run that never fires,
+# The pledge finder runs in the weekly ledger desk, a scheduled task on the owner's computer every Sunday evening
+# (docs/PLEDGE_FINDER.md, docs/desk/WEEKLY.md; Monday mornings as `bb-pledge-finder` until 20 October 2026), so a run that never fires,
 # stops at a permission prompt or crashes leaves nothing on GitHub: the scheduled attempt of 14 October 2026 stopped at
-# its first permission prompt and nobody was told (AI Journalist backtest of 20 October 2026). The day after each Monday
-# this asks the same question the task asks (`pledge_finder.py due`). "run" on a Tuesday means Monday's run was due and
+# its first permission prompt and nobody was told (AI Journalist backtest of 20 October 2026). Two days after each Sunday
+# this asks the same question the desk asks (`pledge_finder.py due`). "run" on a Tuesday means Sunday's run was due and
 # opened no pull request, so this job fails and report-failure opens or updates the job-failed issue. A run that found
 # nothing new with the backlog empty also opens no pull request (section 5); the issue then says so and needs no fix.
 on:
@@ -22,7 +23,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: scripts
-      - name: Check that Monday's due run opened its pull request
+      - name: Check that Sunday's due run opened its pull request
         env:
           GH_TOKEN: ${{ github.token }}
         # bash with pipefail, so a failed `due` (GitHub's API down) fails the job instead of reading as "skip".
@@ -30,7 +31,7 @@ jobs:
         run: |
           python3 scripts/pledge_finder.py due | tee "$RUNNER_TEMP/due.txt"
           if head -1 "$RUNNER_TEMP/due.txt" | grep -q '^run'; then
-            echo "Error: the pledge finder was due and has opened no pull request since: $(head -1 "$RUNNER_TEMP/due.txt"). Check the bb-pledge-finder task on the owner's computer, or, if it found nothing new with the backlog empty, close this issue."
+            echo "Error: the pledge finder was due and has opened no pull request since: $(head -1 "$RUNNER_TEMP/due.txt"). Check the weekly-ledger-desk task's latest run on the owner's computer (it may have stopped before reaching BoroughBook.UK), run the pledge finder by hand if so, or, if it found nothing new with the backlog empty, close this issue."
             exit 1
           fi
 
