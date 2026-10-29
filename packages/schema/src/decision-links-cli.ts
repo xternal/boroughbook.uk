@@ -11,7 +11,7 @@ import { join } from "node:path";
 import { isSeq, parseDocument } from "yaml";
 import { compileContent } from "./content-compile";
 import { requestProblems } from "./claude-request";
-import { SYSTEM_PROMPT, eventFor, linkFor, linkSchema, openPledges, statusAfter, suggestRequest, userPrompt, validSuggestions, type Suggestion } from "./decision-links";
+import { SYSTEM_PROMPT, eventFor, linkFor, linkSchema, openPledges, statusAfter, suggestRequest, userPrompt, validSuggestions, type Suggestion, type TextBlock } from "./decision-links";
 import type { PromiseCard } from "./content";
 import { DecisionsFile } from "./decisions";
 
@@ -35,7 +35,7 @@ const decisions = () => DecisionsFile.parse(JSON.parse(readFileSync(join(root, "
     Null when there is no usable answer (refused or cut off): the decision then stays unassessed and is asked about again
     on the next run. A request the API would refuse is not sent: the run fails with the reason, and the workflow opens a
     job-failed issue. */
-async function ask(system: string, user: string, schema: ReturnType<typeof linkSchema>): Promise<{ answer: unknown; model: string; stop: string } | null> {
+async function ask(system: string, user: TextBlock[], schema: ReturnType<typeof linkSchema>): Promise<{ answer: unknown; model: string; stop: string } | null> {
   const req = suggestRequest(MODEL, system, user, schema);
   const problems = requestProblems(req);
   if (problems.length) throw new Error(`Not sent: the Claude API would refuse this request for ${MODEL}: ${problems.join("; ")}`);
