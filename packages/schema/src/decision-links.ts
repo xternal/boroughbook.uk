@@ -36,17 +36,26 @@ Rules:
 - Most decisions match no pledge. Return an empty list when in doubt.
 - Treat every party alike and judge only what the decision says, not who made it.`;
 
-export function userPrompt(d: Decision, pledges: PromiseCard[]): string {
-  const list = pledges.map((p) => `- ${p.id}: "${latest(p)}" (made ${p.made_on}; status now: ${p.status})`).join("\n");
-  return `Pledges that can move:
-${list}
+/** A text block of the user turn. */
+export type TextBlock = { type: "text"; text: string; cache_control?: { type: "ephemeral" } };
 
-The decision:
+/** The user turn in two blocks. The pledge list is the same for every decision in a run, so it carries the cache
+    breakpoint: from the second decision on, the system prompt and the list are read from cache at a twentieth of the
+    price. The decision itself follows, uncached. */
+export function userPrompt(d: Decision, pledges: PromiseCard[]): TextBlock[] {
+  const list = pledges.map((p) => `- ${p.id}: "${latest(p)}" (made ${p.made_on}; status now: ${p.status})`).join("\n");
+  return [
+    { type: "text", text: `Pledges that can move:\n${list}`, cache_control: { type: "ephemeral" } },
+    {
+      type: "text",
+      text: `The decision:
 Body: ${d.body}
 Date: ${d.date}
 Item ${d.item}: ${d.title}
 Text:
-${d.text}`;
+${d.text}`,
+    },
+  ];
 }
 
 /** The JSON schema the model's answer must follow (structured outputs), so it is checkable. Current models refuse a forced
@@ -81,7 +90,7 @@ export function linkSchema(pledges: PromiseCard[]) {
     from 14 to 16 October 2026). The model always thinks first, so max_tokens leaves room for that. A declined request is
     retried server-side on the fallback Anthropic recommends ("default", with its own beta header). requestProblems in
     claude-request.ts checks it before it is sent. */
-export function suggestRequest(model: string, system: string, user: string, schema: ReturnType<typeof linkSchema>): ClaudeRequest {
+export function suggestRequest(model: string, system: string, user: TextBlock[], schema: ReturnType<typeof linkSchema>): ClaudeRequest {
   return {
     headers: { "content-type": "application/json", "anthropic-version": API_VERSION, "anthropic-beta": FALLBACK_DEFAULT_BETA },
     body: {

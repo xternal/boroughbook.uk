@@ -47,7 +47,11 @@ describe("council decisions and pledges", () => {
     });
     expect(kept.map((k) => k.event)).toEqual(["in_plan"]);
     expect(dropped.length).toBe(3);
-    expect(userPrompt(d, open)).toContain(green.id);
+    expect(userPrompt(d, open)[0]!.text).toContain(green.id);
+    // The pledge list, the same for every decision in a run, is cached; the decision is not.
+    expect(userPrompt(d, open)[0]!.cache_control).toEqual({ type: "ephemeral" });
+    expect(userPrompt(d, open)[1]).not.toHaveProperty("cache_control");
+    expect(userPrompt(d, open)[1]!.text).toContain(d.text);
   });
 
   it("asks for an answer in a schema the API accepts for structured outputs", () => {
