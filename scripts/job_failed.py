@@ -42,6 +42,10 @@ _HEADLINE = re.compile(r"^\s*(?:[\w.]*(?:Error|Exception)\b|error\b)[:\s]")
 def gh_api(path: str, method: str = "GET", body: Optional[dict] = None, raw: bool = False) -> object:
     """One REST call through `gh api`. JSON in and out, or the raw text (logs)."""
     cmd = ["gh", "api", "-X", method, path]
+    if raw:
+        # A job's log carries the colour codes of each `run:` step's echo; without this flag gh refuses to print it,
+        # so every issue said "no error line in the log" with an empty excerpt (1 November 2026).
+        cmd.append("--allow-escape-sequences")
     if body is not None:
         cmd += ["--input", "-"]
     out = subprocess.run(cmd, input=json.dumps(body) if body is not None else None, capture_output=True, text=True)

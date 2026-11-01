@@ -95,6 +95,25 @@ class ExcerptTest(unittest.TestCase):
         self.assertEqual(tail, ["line one", "line two"])
 
 
+class GhApiTest(unittest.TestCase):
+    def test_a_log_is_asked_for_with_its_colour_codes_allowed(self) -> None:
+        """Without the flag gh refuses a log with colour codes and every issue said "no error line in the log"."""
+        import subprocess
+        from unittest import mock
+
+        seen: List[List[str]] = []
+
+        def fake_run(cmd, **kw):
+            seen.append(cmd)
+            return subprocess.CompletedProcess(cmd, 0, stdout="log text\x1b[0m" if "--allow-escape-sequences" in cmd else "{}", stderr="")
+
+        with mock.patch.object(subprocess, "run", fake_run):
+            self.assertEqual(J.gh_api("repos/o/r/actions/jobs/1/logs", raw=True), "log text\x1b[0m")
+            self.assertEqual(J.gh_api("repos/o/r/issues"), {})
+        self.assertIn("--allow-escape-sequences", seen[0])
+        self.assertNotIn("--allow-escape-sequences", seen[1])
+
+
 class ReportTest(unittest.TestCase):
     def test_a_first_failure_opens_a_labelled_issue_with_the_run_and_the_error(self) -> None:
         api = FakeApi(open_issues=[], label_exists=False)
