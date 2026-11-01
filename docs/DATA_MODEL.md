@@ -60,7 +60,7 @@ interface Promise {
   cost_m?: Range | null; capital_cost_m?: Range | null; funded_by?: string | null;
   status: Status; deadline?: string;
   lever_or_toggle_id?: string;
-  events: { date: string; type: string; text: string; evidence_url?: string; auto?: boolean }[];  // append-only
+  events: { date: string; type: string; text: string; evidence_url?: string; archive_url?: string; auto?: boolean }[];  // append-only; an event that quotes its evidence needs archive_url unless the evidence is a decision in data/build/decisions.json (promises:quotes)
   replies: { from: string; date: string; text: string }[];
 }
 

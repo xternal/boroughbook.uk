@@ -75,6 +75,8 @@ One YAML file per pledge in `content/promises/`, named by its id: the party's pr
 - `events`: one `promised` event on `made_on`, saying where it was made ("Said by the Cabinet Member for ... in a council press release").
 - `replies: []` and `editor_check_required: true`.
 
+A status event that quotes its evidence (in curly quotes) is checked word for word by `promises:quotes`, like a version: against the decision's text when `evidence_url` is a council decision in `data/build/decisions.json`, otherwise against `archive_url`, the Wayback Machine copy of the evidence, which the event must then have (October 2026 backtest: two news-based events of 18 October went live unchecked).
+
 Never edit or delete anything already in `versions`, `events` or `replies` (CLAUDE.md invariant 8). Plain British English, active voice, no middle dots.
 
 ## 5. Checks, then the pull request

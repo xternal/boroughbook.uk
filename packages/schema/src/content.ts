@@ -81,7 +81,7 @@ export const PromiseCard = z.object({
   deadline: isoDate.nullable(),
   lever_or_toggle_id: z.string().optional(),
   /** Append-only, like versions. */
-  events: z.array(z.object({ date: isoDate, type: z.enum(EVENT_TYPES), text: z.string(), evidence_url: z.url().optional(), auto: z.boolean().optional() })),
+  events: z.array(z.object({ date: isoDate, type: z.enum(EVENT_TYPES), text: z.string(), evidence_url: z.url().optional(), archive_url: z.url().optional(), auto: z.boolean().optional() })),
   replies: z.array(z.object({ from: z.string(), date: isoDate, text: z.string(), url: z.url().optional() })),
   editor_check_required: z.boolean().optional(),
   editor_note: z.string().optional(),
