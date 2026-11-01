@@ -20,6 +20,7 @@ import json
 import re
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -106,17 +107,29 @@ def unescape(s: str) -> str:
     return " ".join(html.unescape(s or "").split())
 
 
+# The council's site sits behind an Azure firewall that now and then answers 403 to a GitHub runner for a minute or two
+# (1 November 2026: three tries 5 and 10 seconds apart all got 403; the same job passed when rerun). So a refused or
+# failed request is tried again over about four minutes, never faster. A 404 or 400 is the request's own fault and
+# fails at once.
+RETRY_WAITS = (15, 30, 60, 120)
+
+
 def get(op: str, **params) -> bytes:
     url = f"{SERVICE}/{op}?{urllib.parse.urlencode(params)}"
     req = urllib.request.Request(url, headers={"User-Agent": UA})
-    for attempt in range(3):
+    for attempt, wait in enumerate((*RETRY_WAITS, None)):
         try:
             with urllib.request.urlopen(req, timeout=60) as r:
                 return r.read()
-        except Exception:
-            if attempt == 2:
+        except urllib.error.HTTPError as e:
+            if wait is None or e.code in (400, 404):
                 raise
-            time.sleep(5 * (attempt + 1))
+            print(f"{op}: HTTP {e.code}, trying again in {wait}s (attempt {attempt + 1} of {len(RETRY_WAITS) + 1})", file=sys.stderr)
+        except Exception as e:  # noqa: BLE001 - network errors and timeouts: try again
+            if wait is None:
+                raise
+            print(f"{op}: {e}, trying again in {wait}s (attempt {attempt + 1} of {len(RETRY_WAITS) + 1})", file=sys.stderr)
+        time.sleep(wait)
     raise RuntimeError("unreachable")
 
 
