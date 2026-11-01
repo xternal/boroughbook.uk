@@ -15,6 +15,27 @@ export function addedVersions(before: readonly PromiseCard[], after: readonly Pr
   return after.flatMap((p) => p.versions.map((version, i) => ({ id: p.id, n: i + 1, version })).filter(({ n }) => n > (had.get(p.id) ?? 0)));
 }
 
+export interface NewEvent {
+  id: string;
+  event: PromiseCard["events"][number];
+}
+
+const eventKey = (e: PromiseCard["events"][number]) => `${e.date}|${e.type}|${e.text}`;
+
+/**
+ * Timeline events added since `before` and written by a person or a model (not `auto`). Events are append-only, so an
+ * event is new when no event of the card on `before` has the same date, type and text.
+ */
+export function addedEvents(before: readonly PromiseCard[], after: readonly PromiseCard[]): NewEvent[] {
+  const had = new Map(before.map((p) => [p.id, new Set(p.events.map(eventKey))]));
+  return after.flatMap((p) => p.events.filter((e) => !e.auto && !had.get(p.id)?.has(eventKey(e))).map((event) => ({ id: p.id, event })));
+}
+
+/** The passages an event quotes from its evidence: each run of text inside curly double quotes. */
+export function quotedPassages(text: string): string[] {
+  return [...text.matchAll(/“([^”]+)”/g)].map((m) => (m[1] ?? "").trim()).filter(Boolean);
+}
+
 /** PDF text adds ligatures and soft hyphens that a faithful copy never has; even them out on top of the decisions rule. */
 const even = (s: string) => normaliseText(s.normalize("NFKC").replace(/­/g, ""));
 
