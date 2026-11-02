@@ -189,6 +189,14 @@
     "sha256": "44beb01cdafaa2d2768830ef99329ffb21b5101a5d71092991cb3d5f8cef17e1"
    },
    {
+    "id": "foi_library_hours_2026-11-02",
+    "title": "Library opening hours and their cost (the council's Freedom of Information answer, reference 27548162, 2 November 2026)",
+    "publisher": "London Borough of Hammersmith & Fulham, via WhatDoTheyKnow",
+    "url": "https://www.whatdotheyknow.com/request/library_opening_hours_and_their#incoming-3614001",
+    "asset_url": "https://www.whatdotheyknow.com/request/library_opening_hours_and_their/response/3614001/attach/3/Response%20all%20information%20to%20be%20supplied.pdf",
+    "sha256": "73541f0c181e5b94e98e3f2d53a3894a13473c7607660e0e72154f349984d66d"
+   },
+   {
     "id": "cabinet_pack_2026-02-09",
     "title": "Cabinet 9 February 2026, public reports pack (includes budget Appendix B, medium term financial strategy, pages 51 to 60, and Appendix C, investment and savings proposals, pages 61 to 66)",
     "publisher": "London Borough of Hammersmith & Fulham",
@@ -1697,6 +1705,15 @@
     "method_note": "Half of the £2.1m the council budgeted in 2025/26 to collect household rubbish (not recycling or food waste), told to us in a Freedom of Information answer on 27 October 2026 (reference 27548393). Collecting fortnightly would roughly halve the rounds; the real saving is likely smaller, as recycling usually rises. The council says it has never estimated the saving."
    },
    {
+    "id": "library_hours",
+    "label": "Keep library opening hours",
+    "on": true,
+    "cost_m": 0.55,
+    "quality": "modelled",
+    "source_id": "foi_library_hours_2026-11-02",
+    "method_note": "A fifth of the £2.76m net cost of the library service in 2025/26, told to us in a Freedom of Information answer on 2 November 2026 (reference 27548162). The five libraries open 245 hours a week; cutting a fifth of those, about one day a week at each, would save roughly a fifth of the cost. The real saving is likely smaller, as buildings, books and computers cost the same. The council did not split out staff costs and says it has never estimated the saving."
+   },
+   {
     "id": "extra_officers",
     "label": "Add 20 law enforcement officers",
     "on": false,
@@ -1711,11 +1728,6 @@
     "id": "free_home_care",
     "label": "Keep free home care for older residents",
     "todo": "TODO(source): the council told us on 27 October 2026 (FOI 27548494) that it has not estimated the income from charging, as it does not assess most users' means; no sourced cost yet"
-   },
-   {
-    "id": "library_hours",
-    "label": "Keep library opening hours",
-    "todo": "TODO(source): cost from the budget report or a costed pledge"
    }
   ],
   "forecast": [
