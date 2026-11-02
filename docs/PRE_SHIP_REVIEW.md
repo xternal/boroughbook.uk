@@ -91,6 +91,8 @@ To publish with no test values, the three "Balance it" switches without a source
 
 On 27 October 2026 weekly bins came back, with a modelled cost: half the £2.1m household rubbish collection cost from the council's FOI answer (reference 27548393), which also says the council has never estimated the saving. Free home care and library hours stay held back.
 
+On 2 November 2026 library hours came back, with a modelled cost: a fifth of the £2.76m net cost of the library service from the council's FOI answer (reference 27548162), for cutting a fifth of the opening hours. The council gave no split of staff costs and has never estimated the saving. Free home care stays held back, as the council holds no estimate of what charging would raise.
+
 Still open before calling it a launch: B5 and B6 (legal), the editor checks, the human checks of the mapping tables, the Conservative manifesto archive link and B3.
 
 ## Payments mapping signed off (7 Oct 2026)
