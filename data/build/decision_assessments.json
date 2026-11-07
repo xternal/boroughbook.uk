@@ -255,6 +255,11 @@
    "on": "2026-10-08",
    "by": "Claude (backfill, read by hand in a session)",
    "links": 0
+  },
+  "mg-73948": {
+   "on": "2026-11-07",
+   "by": "claude-opus-5-5",
+   "links": 0
   }
  }
 }

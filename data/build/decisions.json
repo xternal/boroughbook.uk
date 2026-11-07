@@ -127,6 +127,28 @@
    ]
   },
   {
+   "id": "mg-73948",
+   "date": "2026-10-12",
+   "body": "Cabinet",
+   "meeting_id": 8052,
+   "item": "5",
+   "kind": "resolution",
+   "title": "Finance Peer Review Progress Review",
+   "text": "To note the progress review report in Appendix 1 of the Local Government Association Finance Peer Challenge of H&F.",
+   "url": "https://democracy.lbhf.gov.uk/ieListDocuments.aspx?CId=116&MId=8052",
+   "meeting_url": "https://democracy.lbhf.gov.uk/ieListDocuments.aspx?CId=116&MId=8052",
+   "documents": [
+    {
+     "title": "Cabinet Finance Peer Challenge Progress Review",
+     "url": "https://democracy.lbhf.gov.uk/mgConvert2PDF.aspx?ID=136409"
+    },
+    {
+     "title": "Appendix 1 – LGA Finance Peer Challenge Progress Review Final Report",
+     "url": "https://democracy.lbhf.gov.uk/mgConvert2PDF.aspx?ID=136410"
+    }
+   ]
+  },
+  {
    "id": "mg-73759",
    "date": "2026-10-12",
    "body": "Cabinet",
@@ -1085,7 +1107,7 @@
    "body": "Cabinet",
    "date": "2026-10-12",
    "url": "https://democracy.lbhf.gov.uk/ieListDocuments.aspx?CId=116&MId=8052",
-   "sha256": "37ff4fb26d9c90892fcf8cc25dc8dc3c7338f85c995d4beaa23deb460eb52477"
+   "sha256": "fc32a2daba810c65935a0d8613a61839c57c5bbb65c38c904b695152b71f3ec8"
   },
   {
    "meeting_id": 8051,
