@@ -1,0 +1,20 @@
+id: "lab-2026-ev-charging"
+actor:
+  kind: "party"
+  id: "labour"
+made_on: "2026-05-01"
+venue: "manifesto"
+area: "Climate and environment"
+versions:
+  - text: "Continue to expand one of Britain’s densest electric vehicle charging networks, with plug-in points in every neighbourhood."
+    recorded_on: "2026-11-08"
+    source_url: "https://hflabour.com/wp-content/uploads/2026/05/HF-manifesto-EXEC.pdf"
+    page: 4
+status: "promised"
+deadline: null
+events:
+  - date: "2026-05-01"
+    type: "promised"
+    text: "In the 2026 Labour manifesto, page 4; not one of its headline pledges"
+replies: []
+editor_check_required: true
