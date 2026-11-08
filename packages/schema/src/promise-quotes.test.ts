@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { PromiseCard } from "./content";
-import { addedVersions, checkQuote, textOfHtml, waybackRaw } from "./promise-quotes";
+import { addedEvents, addedVersions, checkQuote, quotedPassages, textOfHtml, waybackRaw } from "./promise-quotes";
 
 const card = (id: string, texts: string[]): PromiseCard => ({
   id,
@@ -46,5 +46,21 @@ describe("pledge quotes against their sources", () => {
     expect(waybackRaw("https://web.archive.org/web/20260617065909/https://hflabour.com/m.pdf")).toBe("https://web.archive.org/web/20260617065909id_/https://hflabour.com/m.pdf");
     expect(waybackRaw("https://web.archive.org/web/20260617065909if_/https://hflabour.com/")).toBe("https://web.archive.org/web/20260617065909id_/https://hflabour.com/");
     expect(waybackRaw("https://example.org/a")).toBe("https://example.org/a");
+  });
+
+  it("checks the events added since the ref, not the automatic ones or those already published", () => {
+    const old = { date: "2026-09-14", type: "in_plan" as const, text: "Cabinet decision: “39 new affordable homes”" };
+    const news = { date: "2026-09-10", type: "delivering" as const, text: "Council news, 10 September 2026: “our first playground transformation is complete”" };
+    const auto = { date: "2026-10-31", type: "deadline_missed" as const, text: "The deadline passed.", auto: true };
+    const before = [{ ...card("a", ["one"]), events: [old] }];
+    const after = [{ ...card("a", ["one"]), events: [old, news, auto] }];
+    expect(addedEvents(before, after)).toEqual([{ id: "a", event: news }]);
+  });
+
+  it("finds each passage an event quotes", () => {
+    // c2f6bc3 (18 Oct 2026): two passages, one of them with a straight quote inside it.
+    const text = "Council news, 15 July 2026 (being delivered): “A new, unique tariff from Octopus Energy is set to slash energy bills”; the council's “programme to improve energy efficiency”";
+    expect(quotedPassages(text)).toEqual(["A new, unique tariff from Octopus Energy is set to slash energy bills", "programme to improve energy efficiency"]);
+    expect(quotedPassages("No quotation here.")).toEqual([]);
   });
 });
