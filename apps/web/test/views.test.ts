@@ -1,10 +1,14 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { NextRequest, type NextFetchEvent } from "next/server";
-import { counterFromEnv, counts, countView, dayKey, isCountedPage, isNotARead, isNotAReader, readViews, topPages, totalViews, VIEWS_DAYS, type ViewsFile } from "@/lib/views";
+import { claimsFetchMetadataBrowser, counterFromEnv, counts, countView, dayKey, isCountedPage, isNotARead, isNotAReader, readViews, topPages, totalViews, VIEWS_DAYS, type ViewsFile } from "@/lib/views";
 
 // A browser's user agent, only ever sent here to a stand-in for the store: nothing is counted for real.
 const BROWSER = "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1";
-const navigation = (extra: Record<string, string> = {}) => new Headers({ "user-agent": BROWSER, "sec-fetch-dest": "document", ...extra });
+const navigation = (extra: Record<string, string> = {}) =>
+  new Headers({ "user-agent": BROWSER, "sec-fetch-dest": "document", "sec-fetch-mode": "navigate", "sec-fetch-site": "none", "sec-fetch-user": "?1", ...extra });
+const CHROME = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36";
+const SAFARI = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.1 Safari/605.1.15";
+const FIREFOX = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:145.0) Gecko/20100101 Firefox/145.0";
 const counter = { url: "https://example.upstash.io", writeToken: "write", readToken: "read" };
 
 afterEach(() => {
@@ -161,15 +165,61 @@ describe("which requests count", () => {
       expect(isNotAReader(ua), ua).toBe(false);
   });
 
-  it("skips prefetches and requests for part of a page, and counts browsers that send no fetch headers", () => {
+  it("skips prefetches and requests for part of a page", () => {
     expect(isNotARead(navigation({ "sec-purpose": "prefetch" }))).toBe(true);
     expect(isNotARead(navigation({ "sec-purpose": "prefetch;prerender" }))).toBe(true);
     expect(isNotARead(navigation({ purpose: "prefetch" }))).toBe(true);
     expect(isNotARead(navigation({ "next-router-prefetch": "1" }))).toBe(true);
     expect(isNotARead(navigation({ "sec-fetch-dest": "image" }))).toBe(true);
     expect(isNotARead(navigation({ "sec-fetch-dest": "empty" }))).toBe(true);
+    expect(isNotARead(navigation({ "sec-fetch-dest": "iframe" }))).toBe(true);
     expect(isNotARead(navigation())).toBe(false);
-    expect(isNotARead(new Headers({ "user-agent": BROWSER }))).toBe(false);
+  });
+
+  it("counts a page opened in Chrome, Safari or Firefox", () => {
+    for (const ua of [CHROME, SAFARI, FIREFOX, BROWSER]) expect(counts("GET", "/supplier/acme-ltd", navigation({ "user-agent": ua })), ua).toBe(true);
+    // Following a link from another page of the site, rather than typing the address.
+    expect(counts("GET", "/supplier/acme-ltd", navigation({ "user-agent": CHROME, "sec-fetch-site": "same-origin" }))).toBe(true);
+  });
+
+  it("skips a script that borrows a current browser's name but sends none of a browser's fetch headers", () => {
+    for (const ua of [
+      CHROME,
+      SAFARI,
+      FIREFOX,
+      BROWSER,
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
+      "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36",
+      "Mozilla/5.0 (iPhone; CPU iPhone OS 18_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/131.0.6778.73 Mobile/15E148 Safari/604.1",
+    ]) {
+      expect(isNotARead(new Headers({ "user-agent": ua })), ua).toBe(true);
+      expect(counts("GET", "/supplier/acme-ltd", new Headers({ "user-agent": ua, accept: "text/html" })), ua).toBe(false);
+    }
+  });
+
+  it("skips a document request that is not a browser opening the page", () => {
+    expect(isNotARead(navigation({ "sec-fetch-mode": "no-cors" }))).toBe(true);
+    const noMode = navigation();
+    noMode.delete("sec-fetch-mode");
+    expect(isNotARead(noMode)).toBe(true);
+  });
+
+  it("still counts browsers too old to send fetch headers, told apart by version", () => {
+    for (const ua of [
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36",
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0",
+      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.6 Safari/605.1.15",
+      "Mozilla/5.0 (iPhone; CPU iPhone OS 15_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.6 Mobile/15E148 Safari/604.1",
+      "Mozilla/5.0 (iPhone; CPU iPhone OS 16_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/110.0.5481.83 Mobile/15E148 Safari/604.1",
+    ]) {
+      expect(claimsFetchMetadataBrowser(ua), ua).toBe(false);
+      expect(isNotARead(new Headers({ "user-agent": ua })), ua).toBe(false);
+    }
+    // The first versions that send them.
+    expect(claimsFetchMetadataBrowser("Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.0.0 Safari/537.36")).toBe(true);
+    expect(claimsFetchMetadataBrowser("Mozilla/5.0 (Windows NT 10.0; rv:90.0) Gecko/20100101 Firefox/90.0")).toBe(true);
+    expect(claimsFetchMetadataBrowser("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.4 Safari/605.1.15")).toBe(true);
+    expect(claimsFetchMetadataBrowser("Mozilla/5.0 (iPad; CPU OS 16_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148")).toBe(true);
   });
 
   it("counts a move within the app (the postcode finders, the decoder's links), but not Next.js fetching ahead", () => {
@@ -178,6 +228,7 @@ describe("which requests count", () => {
     expect(isNotARead(rsc({ "next-router-prefetch": "1" }))).toBe(true);
     expect(isNotARead(rsc({ "next-router-prefetch": "1", "next-router-segment-prefetch": "/_tree" }))).toBe(true);
     expect(isNotARead(rsc({ rsc: "0" }))).toBe(true);
+    expect(counts("GET", "/supplier/acme-ltd", rsc())).toBe(true);
   });
 
   it("counts only a reader's GET of a page", () => {

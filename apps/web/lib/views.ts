@@ -4,8 +4,8 @@
  *
  * The proxy (proxy.ts) adds one to today's count for a page a reader opens, after the page is on its way, from the
  * request's path alone. It reads the user agent and the fetch headers only to skip crawlers, link previews, scripts
- * and prefetches, and stores neither: not the IP address, country, device, browser, referrer or time of day. Only the
- * site's own reading pages count. What a reader types (a postcode, a band, a capital value, a Balance it choice) never
+ * (including scripts that borrow a browser's name) and prefetches, and stores neither: not the IP address, country,
+ * device, browser, referrer or time of day. Only the site's own reading pages count. What a reader types (a postcode, a band, a capital value, a Balance it choice) never
  * reaches a page's path: it stays in the browser, goes in an API request's body, or rides in the query string, which is
  * never stored. Pages that carry a token (/follow/confirm, /follow/manage) are steps in a flow and never count. Without
  * the Upstash variables (a preview, a laptop) nothing is counted and /most-read says so.
@@ -69,17 +69,43 @@ const NOT_A_READER =
 export const isNotAReader = (userAgent: string | null) => !userAgent || NOT_A_READER.test(userAgent);
 
 /**
- * Not a page being opened: a browser fetching ahead of a click, or a request for part of a page. Most links are
- * plain <a>, so most reads are whole-document requests (browsers without Sec-Fetch-Dest still count). The postcode
- * finders and the council tax decoder's links move within the app instead, as a request with an RSC header for the
- * page they open; that counts too, unless it is Next.js fetching ahead.
+ * Whether a user agent claims a browser that sends Fetch Metadata (Sec-Fetch-Dest and the rest) with every request:
+ * Chrome and every browser built on it (Edge, Opera, Samsung Internet, Brave, Android's in-app views) from version 80,
+ * Firefox from 90, Safari from 16.4. On an iPhone or iPad every browser uses Safari's engine (Chrome for iOS, Firefox
+ * for iOS, in-app views), so the system's version decides. Anything else, or an older version, may be a genuinely old
+ * browser that never sent the headers, and is given the benefit of the doubt.
+ */
+const atLeast = (major: string | undefined, minor: string | undefined, wantMajor: number, wantMinor = 0) =>
+  major !== undefined && (Number(major) > wantMajor || (Number(major) === wantMajor && Number(minor ?? 0) >= wantMinor));
+export function claimsFetchMetadataBrowser(userAgent: string): boolean {
+  const ios = /\b(?:iPhone|iPad|iPod)\b.*?\bOS (\d+)_(\d+)/.exec(userAgent);
+  if (ios) return atLeast(ios[1], ios[2], 16, 4);
+  const firefox = /\bFirefox\/(\d+)/.exec(userAgent);
+  if (firefox) return atLeast(firefox[1], undefined, 90);
+  const chrome = /\bChrome\/(\d+)/.exec(userAgent);
+  if (chrome) return atLeast(chrome[1], undefined, 80);
+  const safari = /\bVersion\/(\d+)(?:\.(\d+))?.*\bSafari\//.exec(userAgent);
+  if (safari) return atLeast(safari[1], safari[2], 16, 4);
+  return false;
+}
+
+/**
+ * Not a page being opened: a browser fetching ahead of a click, a request for part of a page, or a script dressed as a
+ * browser. Most links are plain <a>, so most reads are whole-document navigations (Sec-Fetch-Dest: document,
+ * Sec-Fetch-Mode: navigate). A request whose user agent claims a current browser but carries no Sec-Fetch-Dest is a
+ * script borrowing a browser's name, because every such browser sends it: one walked thousands of supplier pages a day
+ * from 8 November 2026. Old browsers that never sent the header still count. The postcode finders and the council tax
+ * decoder's links move within the app instead, as a request with an RSC header for the page they open; that counts
+ * too, unless it is Next.js fetching ahead.
  */
 export function isNotARead(headers: Headers): boolean {
   if (/prefetch|prerender/i.test(headers.get("sec-purpose") ?? headers.get("purpose") ?? "")) return true;
   if (headers.has("next-router-prefetch") || headers.has("next-router-segment-prefetch")) return true;
   if (headers.has("rsc")) return headers.get("rsc") !== "1";
   const dest = headers.get("sec-fetch-dest");
-  return dest !== null && dest !== "document";
+  if (dest === null) return claimsFetchMetadataBrowser(headers.get("user-agent") ?? "");
+  // A browser opening a page always sends both; a document fetched any other way is not someone opening it.
+  return dest !== "document" || headers.get("sec-fetch-mode") !== "navigate";
 }
 
 /** Whether a request adds one to its page's count today. */
