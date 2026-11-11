@@ -112,8 +112,9 @@ export default async function MostReadPage() {
             today&rsquo;s is still counting.
           </li>
           <li>
-            Search engines and other crawlers, link previews, AI fetchers, scripts and pages a browser loads ahead of a click are not counted. Nor is any address
-            that could hold something a reader typed, such as a postcode, or a link to the follow pages in our emails.
+            Search engines and other crawlers, link previews, AI fetchers, scripts (including scripts that give a browser&rsquo;s name but do not behave like
+            one) and pages a browser loads ahead of a click are not counted. Nor is any address that could hold something a reader typed, such as a postcode,
+            or a link to the follow pages in our emails.
           </li>
           <li>
             The count keeps the page&rsquo;s address and the date, nothing else: no IP address, cookie, device, browser, country, referrer or time of day. It
