@@ -71,6 +71,11 @@
    "by": "Claude (backfill, read by hand in a session)",
    "links": 0
   },
+  "mg-72931": {
+   "on": "2026-11-17",
+   "by": "claude-opus-5-5",
+   "links": 1
+  },
   "mg-72944": {
    "on": "2026-10-08",
    "by": "Claude (backfill, read by hand in a session)",
@@ -236,6 +241,11 @@
    "by": "Claude (backfill, read by hand in a session)",
    "links": 0
   },
+  "mg-73745": {
+   "on": "2026-11-17",
+   "by": "claude-opus-5-5",
+   "links": 0
+  },
   "mg-73753": {
    "on": "2026-10-16",
    "by": "claude-opus-5-5",
@@ -298,6 +308,16 @@
   },
   "mg-73976": {
    "on": "2026-11-16",
+   "by": "claude-opus-5-5",
+   "links": 0
+  },
+  "mg-74097": {
+   "on": "2026-11-17",
+   "by": "claude-opus-5-5",
+   "links": 0
+  },
+  "mg-74100": {
+   "on": "2026-11-17",
    "by": "claude-opus-5-5",
    "links": 0
   }

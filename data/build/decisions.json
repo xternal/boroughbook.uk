@@ -5,6 +5,106 @@
  "from": "2026-01-01",
  "decisions": [
   {
+   "id": "mg-74100",
+   "date": "2026-11-16",
+   "body": "Cabinet",
+   "meeting_id": 8053,
+   "item": "7",
+   "kind": "decision",
+   "title": "Funding Community Benefits Through Planning Obligations Draw Down Report 2025/26",
+   "text": "That Cabinet approves the 2025/26 drawdown of Section 106 and Community Infrastructure Levy monies as set out in this report, to fund expenditure of £14,465,944 for a wide range of community benefits across the borough.\nThat Cabinet notes the improvements to Uxbridge Road.",
+   "url": "https://democracy.lbhf.gov.uk/ieDecisionDetails.aspx?AIId=74100",
+   "meeting_url": "https://democracy.lbhf.gov.uk/ieListDocuments.aspx?CId=116&MId=8053",
+   "documents": [
+    {
+     "title": "Cabinet Report",
+     "url": "https://democracy.lbhf.gov.uk/mgConvert2PDF.aspx?ID=136774"
+    },
+    {
+     "title": "Appendix 1 - The 2025-26 Drawdown Report",
+     "url": "https://democracy.lbhf.gov.uk/mgConvert2PDF.aspx?ID=136775"
+    }
+   ]
+  },
+  {
+   "id": "mg-73745",
+   "date": "2026-11-16",
+   "body": "Cabinet",
+   "meeting_id": 8053,
+   "item": "6",
+   "kind": "decision",
+   "title": "Article 4 Direction - Commercial to Residential",
+   "text": "That Cabinet confirm the Article 4 direction made on 5th December 2024 (Appendix 1) which removes permitted development rights from Class E uses to Class C3 uses (residential) within the areas shown on the maps attached at Appendix 2;\nThat Cabinet notes that, if confirmed, the Article 4 Direction will come into effect on 23rd November 2026.",
+   "url": "https://democracy.lbhf.gov.uk/ieDecisionDetails.aspx?AIId=73745",
+   "meeting_url": "https://democracy.lbhf.gov.uk/ieListDocuments.aspx?CId=116&MId=8053",
+   "documents": [
+    {
+     "title": "Cabinet Report",
+     "url": "https://democracy.lbhf.gov.uk/mgConvert2PDF.aspx?ID=136769"
+    },
+    {
+     "title": "Appendix 1 - Article 4 Direction",
+     "url": "https://democracy.lbhf.gov.uk/mgConvert2PDF.aspx?ID=136770"
+    },
+    {
+     "title": "Appendix 2 - Maps - Article 4 Direction E Class to Resi 2023",
+     "url": "https://democracy.lbhf.gov.uk/mgConvert2PDF.aspx?ID=136771"
+    },
+    {
+     "title": "Appendix 3 -Schedule of responses Article 4 Commercial to residential",
+     "url": "https://democracy.lbhf.gov.uk/mgConvert2PDF.aspx?ID=136772"
+    }
+   ]
+  },
+  {
+   "id": "mg-74097",
+   "date": "2026-11-16",
+   "body": "Cabinet",
+   "meeting_id": 8053,
+   "item": "5",
+   "kind": "decision",
+   "title": "Parking Strategy - On Street Parking Charges",
+   "text": "To approve the additional demand-management uplift to on-street parking charges, alongside the inflation allowance, for on-street parking tariffs set out in the report.\nTo approve annual increases in line with inflation for all Council-set parking charges effectiveness.\nTo delegate implementation to the Executive Director of Place, in consultation with the Cabinet Member for Climate Emergency and Travel, including confirmation of the inflation measure, annual review date and rounding arrangements through the Council’s fees and charges process, reconciliation of the final tariff schedules, and completion of the applicable statutory procedures.",
+   "url": "https://democracy.lbhf.gov.uk/ieDecisionDetails.aspx?AIId=74097",
+   "meeting_url": "https://democracy.lbhf.gov.uk/ieListDocuments.aspx?CId=116&MId=8053",
+   "documents": [
+    {
+     "title": "Parking Strategy",
+     "url": "https://democracy.lbhf.gov.uk/mgConvert2PDF.aspx?ID=136783"
+    }
+   ]
+  },
+  {
+   "id": "mg-72931",
+   "date": "2026-11-16",
+   "body": "Cabinet",
+   "meeting_id": 8053,
+   "item": "4",
+   "kind": "decision",
+   "title": "Housing Strategy 2026-31",
+   "text": "That Cabinet approve the Hammersmith & Fulham Housing Strategy 2026–31 as the Council’s overarching framework for housing delivery and improvement over the next five years.\nThat Cabinet agree to the development of Annual Housing Action Plans (AHAP) based on the draft Housing Strategy, ensuring delivery of its objectives and alignment with resident priorities.\nThat Cabinet note the Strategy’s five strategic priorities: preventing homelessness; increasing the supply of genuinely accessible, affordable homes; improving housing quality and safety; creating safe, clean green neighbourhoods, and providing compassionate and responsive services.",
+   "url": "https://democracy.lbhf.gov.uk/ieDecisionDetails.aspx?AIId=72931",
+   "meeting_url": "https://democracy.lbhf.gov.uk/ieListDocuments.aspx?CId=116&MId=8053",
+   "documents": [
+    {
+     "title": "Main Report",
+     "url": "https://democracy.lbhf.gov.uk/mgConvert2PDF.aspx?ID=136776"
+    },
+    {
+     "title": "Appendix 1 – Draft Housing Strategy 2026-31",
+     "url": "https://democracy.lbhf.gov.uk/mgConvert2PDF.aspx?ID=136777"
+    },
+    {
+     "title": "Appendix 2 – Equality Impact Analysis",
+     "url": "https://democracy.lbhf.gov.uk/mgConvert2PDF.aspx?ID=136778"
+    },
+    {
+     "title": "Appendix 3 - Housing Strategy 2026-31 Consultation and Engagement Report",
+     "url": "https://democracy.lbhf.gov.uk/mgConvert2PDF.aspx?ID=136779"
+    }
+   ]
+  },
+  {
    "id": "mg-73976",
    "date": "2026-10-21",
    "body": "Full Council",
@@ -1246,6 +1346,13 @@
   }
  ],
  "meetings": [
+  {
+   "meeting_id": 8053,
+   "body": "Cabinet",
+   "date": "2026-11-16",
+   "url": "https://democracy.lbhf.gov.uk/ieListDocuments.aspx?CId=116&MId=8053",
+   "sha256": "e1cbc15b3a2823a73fe0700c509c9a2c2e8d16b49d544b91a789723c611a6a28"
+  },
   {
    "meeting_id": 8060,
    "body": "Full Council",
