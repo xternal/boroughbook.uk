@@ -25,3 +25,11 @@ links:
       purposes
     suggested_by: Claude (backfill, read in a session)
     suggested_on: 2026-10-08
+  - decision_id: mg-72931
+    promise_id: lab-2026-affordable-homes
+    event: in_plan
+    quote: "That Cabinet note the Strategy’s five strategic priorities: preventing
+      homelessness; increasing the supply of genuinely accessible, affordable
+      homes"
+    suggested_by: claude-opus-5-5
+    suggested_on: 2026-11-17
