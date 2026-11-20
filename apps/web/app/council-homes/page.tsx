@@ -1,3 +1,4 @@
+import { COUNCIL_UPDATED } from "@/lib/updated";
 import type { Metadata } from "next";
 import { derive } from "@borough-ledger/schema";
 import { CapitalFunding, CapitalGroups, CapitalPledges } from "@/components/Capital";
@@ -43,7 +44,7 @@ export default function CouncilHomesPage() {
   const housingPledges = m.promises.filter((p) => p.area === "Housing and homelessness");
   const pp = (b: (typeof HOMES.budget)[number]) => homesFig(b.now);
   return (
-    <PageShell m={m}>
+    <PageShell m={m} updated={COUNCIL_UPDATED}>
       <div className="hero">
         <p className="small">
           <a href="/budget">The council&rsquo;s budget</a>
@@ -209,7 +210,7 @@ export default function CouncilHomesPage() {
           <a href="/building#cap-notes-h">four-year capital programme</a>.
         </p>
       </section>
-      <JsonLd data={capitalJsonLd("council-homes", title, description, HOMES.source_id)} />
+      <JsonLd data={capitalJsonLd("council-homes", title, description, HOMES.source_id)} modified={COUNCIL_UPDATED} />
     </PageShell>
   );
 }

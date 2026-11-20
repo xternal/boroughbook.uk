@@ -63,3 +63,24 @@ describe("sources", () => {
     expect(groups.find((g) => g.id === "spend")?.items.length).toBe(15);
   });
 });
+
+describe("dateModified from the page's own date", () => {
+  it("goes on the first page node, never a breadcrumb, and never overwrites one", async () => {
+    const { withModified } = await import("@/components/JsonLd");
+    const out = withModified([{ "@type": "WebPage", name: "x" }, { "@type": "BreadcrumbList" }], "2026-11-17") as object[];
+    expect(out[0]).toMatchObject({ dateModified: "2026-11-17" });
+    expect(out[1]).not.toHaveProperty("dateModified");
+    expect(withModified({ "@type": "Article", dateModified: "2026-01-01" }, "2026-11-17")).toMatchObject({ dateModified: "2026-01-01" });
+    expect(withModified({ "@type": "FAQPage" }, "2026-11-17")).not.toHaveProperty("dateModified");
+    expect(withModified({ "@type": "WebPage" }, undefined)).not.toHaveProperty("dateModified");
+  });
+
+  it("the home page date is the newest of the money, the promises and the decisions", async () => {
+    const { buildModel } = await import("@/lib/model");
+    const { COUNCIL_UPDATED, DECISIONS_UPDATED, homeUpdated, promisesUpdated } = await import("@/lib/updated");
+    const m = buildModel();
+    const d = homeUpdated(m.promises);
+    expect(d).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    for (const other of [COUNCIL_UPDATED, DECISIONS_UPDATED, promisesUpdated(m.promises)]) if (other) expect(d >= other).toBe(true);
+  });
+});

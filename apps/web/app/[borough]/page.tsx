@@ -1,3 +1,4 @@
+import { Updated } from "@/components/Updated";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { DATA, derive } from "@borough-ledger/schema";
@@ -125,6 +126,9 @@ export default async function BoroughPage({ params }: Props) {
             results={!!P?.wards.some((w) => w.election)}
           />
           <h1>Where your council tax goes in {m.place.short}</h1>
+          <p className="small muted">
+            <Updated date={m.vintage} />
+          </p>
           {K ? (
             <p className="lede">
               A Band D home pays <Num f={m.bill.total} fmt="gbp2" /> this year, up <Num f={m.bill.risePct} fmt="pct1" />. Most of it,{" "}
@@ -363,7 +367,7 @@ export default async function BoroughPage({ params }: Props) {
         </section>
         <Footer council={m.place.short} full={`${councilWithThe(m.place.council)}${K ? ` or ${K.council}` : ""}`} hasTestData={false} />
       </main>
-      <JsonLd data={jsonLd} />
+      <JsonLd data={jsonLd} modified={m.vintage} />
     </>
   );
 }

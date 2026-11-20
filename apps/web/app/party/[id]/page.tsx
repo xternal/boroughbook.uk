@@ -74,7 +74,7 @@ export default async function PartyPage({ params }: Props) {
   const qa = questions(party, m);
   const wards = [...new Set(party.councillors.map((c) => c.wardId))];
   return (
-    <PageShell m={m}>
+    <PageShell m={m} updated={party.changed}>
       <div className="hero">
         <p className="small">
           <a href="/promises">Promises</a>

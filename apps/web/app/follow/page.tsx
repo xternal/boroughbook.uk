@@ -1,3 +1,5 @@
+import { JsonLd } from "@/components/JsonLd";
+import { breadcrumbs } from "@/lib/structured";
 import type { Metadata } from "next";
 import { EmailFollow } from "@/components/EmailFollow";
 import { PageShell } from "@/components/PageShell";
@@ -81,6 +83,7 @@ export default function FollowPage() {
           <a href="/wards">a councillor&rsquo;s page</a>.
         </p>
       </section>
+      <JsonLd data={breadcrumbs([["Home", "/"], ["Follow changes", "/follow"]])} />
     </PageShell>
   );
 }

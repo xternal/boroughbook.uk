@@ -1,5 +1,6 @@
 /* What the council's three council tax options for next year mean for a reader: their band's bill, the headline read
    right, why it is happening, and how to have a say before the decision. /council-tax-rise and one page per band. */
+import { COUNCIL_UPDATED } from "@/lib/updated";
 import { derive, type Band } from "@borough-ledger/schema";
 import type { PageModel } from "@/lib/model";
 import { formatDay, formatMonthYear } from "@/lib/format";
@@ -67,7 +68,7 @@ export function CouncilTaxRise({ m, band, path }: { m: PageModel; band: Band; pa
   const taxCase = councilTaxCase(m);
   const bandD = ct.options.map((o) => ({ o, rise: derive((o.total.value / m.bill.total.value - 1) * 100, o.total, m.bill.total) }));
   return (
-    <PageShell m={m}>
+    <PageShell m={m} updated={COUNCIL_UPDATED}>
       <div className="hero">
         <h1>Council tax next year: the council&rsquo;s three options{band !== "D" ? ` for Band ${band} homes` : ""}</h1>
         <p className="lede">

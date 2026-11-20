@@ -1,3 +1,4 @@
+import { COUNCIL_UPDATED } from "@/lib/updated";
 import type { Metadata } from "next";
 import { encodeScenario } from "@borough-ledger/engine";
 import { BalancePart } from "@/components/LedgerSections";
@@ -50,7 +51,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 export default async function Balance({ searchParams }: Props) {
   const { m, pledge, scenario } = await opened(searchParams);
   return (
-    <SectionPage m={m} section="balance" initialScenario={scenario} jsonLd={sectionJsonLd("/balance", NAME, ABOUT)}>
+    <SectionPage m={m} section="balance" updated={COUNCIL_UPDATED} initialScenario={scenario} jsonLd={sectionJsonLd("/balance", NAME, ABOUT)}>
       <BalancePart m={m} view="own" pledge={pledge ?? undefined} />
     </SectionPage>
   );

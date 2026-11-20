@@ -1,3 +1,5 @@
+import { breadcrumbs } from "@/lib/structured";
+import { DECISIONS_UPDATED } from "@/lib/updated";
 import type { Metadata } from "next";
 import { FollowLink } from "@/components/FollowLink";
 import { JsonLd } from "@/components/JsonLd";
@@ -30,7 +32,7 @@ export default function DecisionsPage() {
   const meetings = meetingsOf(m);
   const linked = meetings.reduce((a, x) => a + x.decisions.filter((d) => d.links.length).length, 0);
   return (
-    <PageShell m={m}>
+    <PageShell m={m} updated={DECISIONS_UPDATED}>
       <div className="hero">
         <p className="small">
           <a href="/promises">Promises</a>
@@ -91,7 +93,8 @@ export default function DecisionsPage() {
         link from a decision to a pledge is suggested by Claude, an AI, with the decision&rsquo;s exact words, and added only when an editor confirms it.
       </p>
       <JsonLd
-        data={{
+        modified={DECISIONS_UPDATED}
+        data={[{
           "@context": "https://schema.org",
           "@type": "CollectionPage",
           name: "Council decisions",
@@ -102,7 +105,7 @@ export default function DecisionsPage() {
             numberOfItems: DECISIONS.decisions.length,
             itemListElement: DECISIONS.decisions.map((d, i) => ({ "@type": "ListItem", position: i + 1, name: `${d.body}: ${d.title}`, url: `${SITE_URL}/decisions#${d.id}` })),
           },
-        }}
+        }, breadcrumbs([["Home", "/"], ["Council decisions", "/decisions"]])]}
       />
     </PageShell>
   );

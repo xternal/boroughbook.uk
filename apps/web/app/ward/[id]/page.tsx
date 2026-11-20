@@ -1,3 +1,4 @@
+import { peopleUpdated } from "@/lib/updated";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { DATA } from "@borough-ledger/schema";
@@ -46,7 +47,7 @@ export default async function WardPage({ params }: Props) {
   const vote = electionOf(w.id);
 
   return (
-    <PageShell m={m}>
+    <PageShell m={m} updated={peopleUpdated(m.people.retrievedOn)}>
       <div className="hero">
         <p className="small">
           <a href="/wards">All wards</a>
@@ -139,7 +140,7 @@ export default async function WardPage({ params }: Props) {
           <p className="small muted">{WARD_MAP.source.attribution}</p>
         </aside>
       </div>
-      <JsonLd data={wardJsonLd(w, m.place.council)} />
+      <JsonLd data={wardJsonLd(w, m.place.council)} modified={peopleUpdated(m.people.retrievedOn)} />
     </PageShell>
   );
 }

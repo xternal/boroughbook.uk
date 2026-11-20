@@ -1,3 +1,5 @@
+import { Updated } from "./Updated";
+import { homeUpdated } from "@/lib/updated";
 import { formatDay } from "@/lib/format";
 import { logbook, statusCounts, watchTiles, type LogEntry, type WatchPick } from "@/lib/home";
 import type { PageModel, PromiseModel } from "@/lib/model";
@@ -69,7 +71,7 @@ export function HomeFirstScreen({ m }: { m: PageModel }) {
           {published ? <>, and {total} promises to watch</> : null}
         </h1>
         <p>
-          {place.yearLabel}, from the council&rsquo;s own budget and spend files
+          {place.yearLabel}, from the council&rsquo;s own budget and spend files. <Updated date={homeUpdated(m.promises)} />
         </p>
       </div>
 

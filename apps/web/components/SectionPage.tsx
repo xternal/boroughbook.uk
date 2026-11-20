@@ -15,17 +15,20 @@ export function SectionPage({
   section,
   initialScenario,
   jsonLd,
+  updated,
   children,
 }: {
   m: PageModel;
   section: SectionId;
   initialScenario?: Scenario;
   jsonLd: object | readonly object[];
+  /** When the page's content last changed, shown on it and given as dateModified. */
+  updated?: string;
   children: React.ReactNode;
 }) {
   const next = nextSection(section);
   return (
-    <PageShell m={m}>
+    <PageShell m={m} updated={updated}>
       <LedgerStateProvider input={m.balance.input} initialScenario={initialScenario}>
         {children}
       </LedgerStateProvider>
@@ -33,7 +36,7 @@ export function SectionPage({
         {next ? <a href={sectionHref(next)}>Next: {sectionLabel(next)}</a> : null}
         <a href="/">Everything on one page</a>
       </nav>
-      <JsonLd data={jsonLd} />
+      <JsonLd data={jsonLd} modified={updated} />
     </PageShell>
   );
 }

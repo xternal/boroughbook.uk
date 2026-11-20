@@ -1,3 +1,4 @@
+import { COUNCIL_UPDATED } from "@/lib/updated";
 import type { Metadata } from "next";
 import { CapitalFunding, CapitalGroups, CapitalNotes, CapitalPledges } from "@/components/Capital";
 import { JsonLd } from "@/components/JsonLd";
@@ -28,7 +29,7 @@ export default function BuildingPage() {
   const biggest = groupsOf("gf")[0]!;
   const firstTwo = gf.years[0]! + gf.years[1]!;
   return (
-    <PageShell m={m}>
+    <PageShell m={m} updated={COUNCIL_UPDATED}>
       <div className="hero">
         <p className="small">
           <a href="/budget">The council&rsquo;s budget</a>
@@ -100,7 +101,7 @@ export default function BuildingPage() {
       </section>
 
       <CapitalNotes resolutionUrl={RESOLUTION.url} />
-      <JsonLd data={capitalJsonLd("building", title, description, CAPITAL.source_id)} />
+      <JsonLd data={capitalJsonLd("building", title, description, CAPITAL.source_id)} modified={COUNCIL_UPDATED} />
     </PageShell>
   );
 }

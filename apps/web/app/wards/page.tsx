@@ -1,3 +1,4 @@
+import { peopleUpdated } from "@/lib/updated";
 import type { Metadata } from "next";
 import { COVERED, PLACES } from "@/lib/places";
 import { JsonLd } from "@/components/JsonLd";
@@ -28,7 +29,7 @@ export default function WardsPage() {
   const m = buildModel();
   const wards = wardsOf(m);
   return (
-    <PageShell m={m}>
+    <PageShell m={m} updated={peopleUpdated(m.people.retrievedOn)}>
       <div className="hero">
         <h1>Your ward</h1>
         <p className="lede">
@@ -65,7 +66,7 @@ export default function WardsPage() {
           Councillors and posts: the council&rsquo;s ModernGov records. Boundaries: {WARD_MAP.source.attribution}
         </p>
       </section>
-      <JsonLd data={wardsJsonLd(wards)} />
+      <JsonLd data={wardsJsonLd(wards)} modified={peopleUpdated(m.people.retrievedOn)} />
     </PageShell>
   );
 }

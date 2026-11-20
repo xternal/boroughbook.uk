@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   title: `Page not found | ${SITE.name}`,
   description: `There is no page at this address on ${SITE.name}. Start from the home page or the promises, or visit another site of the family.`,
   robots: { index: false, follow: true },
+  // A missing page has no address of its own to point search engines at.
+  alternates: { canonical: null },
 };
 
 /**

@@ -1,3 +1,4 @@
+import { peopleUpdated } from "@/lib/updated";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { DATA } from "@borough-ledger/schema";
@@ -40,7 +41,7 @@ export default async function CouncillorPage({ params }: Props) {
   const won = electedWith(c.id, c.wardId);
   const party = m.promises.filter((p) => p.partyId === c.partyId && p.actor !== c.name);
   return (
-    <PageShell m={m}>
+    <PageShell m={m} updated={peopleUpdated(m.people.retrievedOn)}>
       <div className="hero">
         <h1>{c.name}</h1>
         <p className="lede">
@@ -93,7 +94,7 @@ export default async function CouncillorPage({ params }: Props) {
           <PledgeList list={party} />
         </div>
       </div>
-      <JsonLd data={councillorJsonLd(c)} />
+      <JsonLd data={councillorJsonLd(c)} modified={peopleUpdated(m.people.retrievedOn)} />
     </PageShell>
   );
 }
