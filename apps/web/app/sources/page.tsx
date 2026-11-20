@@ -1,3 +1,4 @@
+import { breadcrumbs } from "@/lib/structured";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { PageShell } from "@/components/PageShell";
@@ -71,7 +72,7 @@ export default function SourcesPage() {
         </div>
       </section>
       <JsonLd
-        data={{
+        data={[{
           "@context": "https://schema.org",
           "@type": "CollectionPage",
           name: "Sources",
@@ -82,7 +83,7 @@ export default function SourcesPage() {
             numberOfItems: m.sources.length,
             itemListElement: m.sources.map((s, i) => ({ "@type": "ListItem", position: i + 1, name: s.title, url: s.url })),
           },
-        }}
+        }, breadcrumbs([["Home", "/"], ["Sources", "/sources"]])]}
       />
     </PageShell>
   );

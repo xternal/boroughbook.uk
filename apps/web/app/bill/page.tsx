@@ -1,3 +1,4 @@
+import { COUNCIL_UPDATED } from "@/lib/updated";
 import type { Metadata } from "next";
 import { BillPart } from "@/components/LedgerSections";
 import { SectionPage } from "@/components/SectionPage";
@@ -26,7 +27,7 @@ export function generateMetadata(): Metadata {
 export default function BillPage() {
   const { m, name, description } = words();
   return (
-    <SectionPage m={m} section="bill" jsonLd={sectionJsonLd("/bill", name, description)}>
+    <SectionPage m={m} section="bill" updated={COUNCIL_UPDATED} jsonLd={sectionJsonLd("/bill", name, description)}>
       <BillPart m={m} view="own" />
     </SectionPage>
   );

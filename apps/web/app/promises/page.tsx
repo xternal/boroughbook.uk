@@ -1,3 +1,4 @@
+import { promisesUpdated } from "@/lib/updated";
 import type { Metadata } from "next";
 import { DATA } from "@borough-ledger/schema";
 import { FollowLink } from "@/components/FollowLink";
@@ -44,7 +45,7 @@ export default async function PromisesPage({ searchParams }: Props) {
   const fromManifestos = m.promises.filter((p) => p.venue === "manifesto").length;
   const seatsOf = (party: string) => m.people.councillors.filter((c) => c.party === party).length;
   return (
-    <PageShell m={m}>
+    <PageShell m={m} updated={promisesUpdated(m.promises)}>
       <div className="hero">
         <h1>Promises</h1>
         <p className="lede">
@@ -140,7 +141,7 @@ export default async function PromisesPage({ searchParams }: Props) {
           represents you: <a href="/wards">your ward&rsquo;s councillors</a>.
         </p>
       </section>
-      <JsonLd data={promisesJsonLd(m.promises)} />
+      <JsonLd data={promisesJsonLd(m.promises)} modified={promisesUpdated(m.promises)} />
     </PageShell>
   );
 }

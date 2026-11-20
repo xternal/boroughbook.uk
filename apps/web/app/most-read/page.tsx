@@ -1,3 +1,4 @@
+import { breadcrumbs } from "@/lib/structured";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { PageShell } from "@/components/PageShell";
@@ -127,7 +128,7 @@ export default async function MostReadPage() {
       </section>
 
       <JsonLd
-        data={{
+        data={[{
           "@context": "https://schema.org",
           "@type": "Dataset",
           name: `${SITE.name}: page views per page per day`,
@@ -137,7 +138,7 @@ export default async function MostReadPage() {
           isAccessibleForFree: true,
           creator: { "@type": "Organization", name: SITE.name, url: SITE_URL },
           distribution: [{ "@type": "DataDownload", name: VIEWS_PATH, encodingFormat: "application/json", contentUrl: `${SITE_URL}${VIEWS_PATH}` }],
-        }}
+        }, breadcrumbs([["Home", "/"], ["Most read", "/most-read"]])]}
       />
     </PageShell>
   );

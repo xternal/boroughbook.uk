@@ -1,3 +1,4 @@
+import { COUNCIL_UPDATED } from "@/lib/updated";
 import type { Metadata } from "next";
 import { SectionPage } from "@/components/SectionPage";
 import { Waterfall } from "@/components/Waterfall";
@@ -26,7 +27,7 @@ export function generateMetadata(): Metadata {
 export default function GapPage() {
   const { m, name, description } = words();
   return (
-    <SectionPage m={m} section="gap" jsonLd={sectionJsonLd("/gap", name, description)}>
+    <SectionPage m={m} section="gap" updated={COUNCIL_UPDATED} jsonLd={sectionJsonLd("/gap", name, description)}>
       <Waterfall m={m} view="own" />
     </SectionPage>
   );

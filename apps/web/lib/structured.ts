@@ -10,7 +10,7 @@ function short(s: string, n = 80): string {
   return s.length <= n ? s : `${s.slice(0, n - 1).trimEnd()}…`;
 }
 
-function breadcrumbs(items: [name: string, path: string][]) {
+export function breadcrumbs(items: [name: string, path: string][]) {
   return {
     "@context": CONTEXT,
     "@type": "BreadcrumbList",

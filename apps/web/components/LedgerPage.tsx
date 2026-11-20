@@ -1,3 +1,4 @@
+import { homeUpdated } from "@/lib/updated";
 import { BalancePart, BillPart, BudgetPart } from "@/components/LedgerSections";
 import { Footer } from "@/components/Footer";
 import { HomeFirstScreen } from "@/components/HomeFirstScreen";
@@ -56,7 +57,7 @@ export function LedgerPage({ m }: { m: PageModel }) {
         <Method m={m} view="overview" />
         <Footer council={m.place.short} hasTestData={m.hasTestData} />
       </main>
-      <JsonLd data={jsonLd} />
+      <JsonLd data={jsonLd} modified={homeUpdated(m.promises)} />
     </>
   );
 }

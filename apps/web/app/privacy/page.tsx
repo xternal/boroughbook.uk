@@ -1,3 +1,5 @@
+import { JsonLd } from "@/components/JsonLd";
+import { breadcrumbs } from "@/lib/structured";
 import type { Metadata } from "next";
 import { CONFIRM_TTL_DAYS, DELIVERY_KEEP_DAYS } from "@borough-ledger/server/follow";
 import { loadConfig } from "@borough-ledger/server";
@@ -116,6 +118,7 @@ export default function PrivacyPage() {
           totals, and only candidates who were elected are named.
         </p>
       </section>
+      <JsonLd data={breadcrumbs([["Home", "/"], ["Privacy", "/privacy"]])} />
     </PageShell>
   );
 }

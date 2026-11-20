@@ -1,3 +1,4 @@
+import { Updated } from "./Updated";
 /* A Northern Ireland council's page (Belfast): rates instead of council tax, the council's narrower budget, the rates over
    five years and the councillors by district electoral area. Same layout and checks as every other council's page. */
 import { derive } from "@borough-ledger/schema";
@@ -52,6 +53,9 @@ export function RatesPage({ m, slug }: { m: RatesModel; slug: string }) {
         <div className="hero">
           <HeroTop current={m.place.short} council={councilWithThe(m.place.council)} example={m.b.example_postcode ?? "BT1 5GS"} results={false} />
           <h1>Where your rates go in {m.place.short}</h1>
+          <p className="small muted">
+            <Updated date={m.vintage} />
+          </p>
           <p className="lede">
             On a home of <Num f={m.example.value} fmt="gbp0" /> capital value, {m.example.label}, the rates are <Num f={m.exampleBill} fmt="gbp2" /> this year, up{" "}
             <Num f={m.rates.risePct} fmt="pct1" />. The council keeps <Num f={m.rates.councilShare} fmt="share0" /> of every bill; the rest goes to the Northern
@@ -196,7 +200,7 @@ export function RatesPage({ m, slug }: { m: RatesModel; slug: string }) {
         </section>
         <Footer council={m.place.short} full={councilWithThe(m.place.council)} hasTestData={false} />
       </main>
-      <JsonLd data={jsonLd} />
+      <JsonLd data={jsonLd} modified={m.vintage} />
     </>
   );
 }

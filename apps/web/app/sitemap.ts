@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
 import { DATA, bandsOf } from "@borough-ledger/schema";
-import { DECISIONS } from "@/lib/decisions";
 import { buildModel } from "@/lib/model";
 import { MONTHS, suppliersById } from "@/lib/payments";
 import { dateModified } from "@/lib/promiseText";
@@ -8,18 +7,17 @@ import { SITE_URL } from "@/lib/site";
 import { OTHER_BOROUGHS } from "@/lib/boroughList";
 import { decodedCouncils } from "@/lib/decoder";
 import { partiesOf, topicsOf } from "@/lib/topics";
-import { WARD_MAP } from "@/lib/wards";
+import { DECISIONS_UPDATED, homeUpdated, peopleUpdated, promisesUpdated } from "@/lib/updated";
 
 /** lastModified only where we know when a page's content last changed; search engines ignore a date they cannot trust. */
 export default function sitemap(): MetadataRoute.Sitemap {
   const m = buildModel();
   const changed = new Map(m.promises.map((p) => [p.id, dateModified(p)]));
-  const latest = (ds: string[]) => ds.filter(Boolean).sort().at(-1);
-  const promisesChanged = latest([...changed.values()]);
-  const decisionsChanged = latest([DECISIONS.decisions[0]?.date ?? "", ...DATA.content.decision_links.map((l) => l.suggested_on)]);
-  const peopleChanged = latest([m.people.retrievedOn, WARD_MAP.source.retrieved_on]);
+  const promisesChanged = promisesUpdated(m.promises);
+  const decisionsChanged = DECISIONS_UPDATED;
+  const peopleChanged = peopleUpdated(m.people.retrievedOn);
   return [
-    { url: `${SITE_URL}/`, lastModified: DATA.council.meta.vintage, changeFrequency: "weekly", priority: 1 },
+    { url: `${SITE_URL}/`, lastModified: homeUpdated(m.promises), changeFrequency: "weekly", priority: 1 },
     // Each section of the home page, on a page of its own.
     { url: `${SITE_URL}/bill`, lastModified: DATA.council.meta.vintage, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/budget`, lastModified: DATA.council.meta.vintage, changeFrequency: "monthly", priority: 0.8 },

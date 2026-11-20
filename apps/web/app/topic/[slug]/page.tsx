@@ -72,7 +72,7 @@ export default async function TopicPage({ params }: Props) {
   const qa = questions(topic, m);
   const others = topicsOf(m).filter((t) => t.slug !== topic.slug);
   return (
-    <PageShell m={m}>
+    <PageShell m={m} updated={topic.changed}>
       <div className="hero">
         <p className="small">
           <a href="/promises">Promises</a>
