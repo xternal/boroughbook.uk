@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { BANDS } from "./client";
 import { Quality } from "./quality";
 
 const isoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "expected YYYY-MM-DD");
@@ -32,15 +33,12 @@ const provenance = {
 export const Valued = z.object({ m: z.number(), ...provenance });
 export type Valued = z.infer<typeof Valued>;
 
-/** Council tax bands: A to H in England and Scotland; Wales adds I (its 2005 revaluation). */
-export const BANDS = ["A", "B", "C", "D", "E", "F", "G", "H", "I"] as const;
+export { BANDS, bandsOf, isGapValueLine } from "./client";
 export const Band = z.enum(BANDS);
 /** The bands every nation has; I only where a nation's rules define it. */
 const EIGHT = ["A", "B", "C", "D", "E", "F", "G", "H"] as const;
 const byBand = <T extends z.ZodTypeAny>(v: T) =>
   z.partialRecord(Band, v).refine((r) => EIGHT.every((b) => r[b] !== undefined), "bands A to H are all required");
-/** The bands a nation's rules define, in order: A to H, and I in Wales. */
-export const bandsOf = (rules: { band_ratios: { value: Partial<Record<(typeof BANDS)[number], unknown>> } }) => BANDS.filter((b) => rules.band_ratios.value[b] !== undefined);
 export type Band = z.infer<typeof Band>;
 
 /* ------------------------------------------------------------------ rules */
@@ -404,7 +402,3 @@ export const Promises = z.object({
   promises: z.array(PromiseSeed),
 });
 export type Promises = z.infer<typeof Promises>;
-
-export function isGapValueLine(l: GapLine): l is GapValueLine {
-  return l.kind !== "subtotal" && l.kind !== "total";
-}

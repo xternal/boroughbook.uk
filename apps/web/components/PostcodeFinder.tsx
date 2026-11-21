@@ -2,25 +2,24 @@
 
 import { useRouter } from "next/navigation";
 import { useId, useState } from "react";
-import { DecoderIndex } from "@borough-ledger/schema";
+import type { DecoderIndex } from "@borough-ledger/schema";
 import index from "../../../data/build/council_tax_decoder_index.json";
-import { YOUR_WARD_KEY, lookupPlace, type FinderPlace, type PlaceLookup, type YourWard } from "@/lib/wardFinder";
+import { YOUR_WARD_KEY, loadPlaces, lookupPlace, type PlaceLookup, type YourWard } from "@/lib/wardFinder";
 
 /** Every English council's decoded bill, for a postcode in a council without a full page yet. */
-const DECODED = DecoderIndex.parse(index).councils;
+// Checked against the DecoderIndex schema in test/wards.test.ts; parsing it here would ship zod to every reader.
+const DECODED = (index as unknown as DecoderIndex).councils;
 
 /** Postcode to ward, in any borough on the site. The postcode goes to the site's own lookup (app/api/postcode), which asks postcodes.io and keeps nothing; it never reaches the address bar (docs/PRIVACY.md). On a council's page (here), a postcode in another council opens
  *  that council's page at the top, and the ward it found is kept for this tab so the page can say "your ward"; a postcode
  *  in this council opens its ward. */
 export function PostcodeFinder({
-  places,
   covered,
   example,
   compact = false,
   here,
   label = "Find your ward and councillors",
 }: {
-  places: FinderPlace[];
   covered: string;
   example: string;
   compact?: boolean;
@@ -60,6 +59,9 @@ export function PostcodeFinder({
       onSubmit={async (e) => {
         e.preventDefault();
         setBusy(true);
+        // The wards list loads alongside the postcode lookup; a failure to load it reads as "the service did not answer".
+        const places = loadPlaces();
+        places.catch(() => {});
         const r = await lookupPlace(value, places);
         setResult(r);
         setBusy(false);
@@ -85,6 +87,7 @@ export function PostcodeFinder({
           placeholder={`Postcode, such as ${example}`}
           maxLength={10}
           value={value}
+          onFocus={() => loadPlaces().catch(() => {})}
           onChange={(e) => {
             setValue(e.target.value);
             setResult(null);

@@ -40,3 +40,4 @@ export const DecoderFile = z.object({
 export type DecoderFile = z.infer<typeof DecoderFile>;
 
 export const DecoderIndex = z.object({ note: z.string(), councils: z.record(z.string().regex(/^E0[6789]\d{6}$/), z.tuple([z.string(), z.string()])) });
+export type DecoderIndex = z.infer<typeof DecoderIndex>;

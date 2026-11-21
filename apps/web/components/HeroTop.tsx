@@ -1,5 +1,5 @@
 import { HOME_BOROUGH, OTHER_BOROUGHS } from "@/lib/boroughList";
-import { COVERED, PLACES } from "@/lib/places";
+import { COVERED } from "@/lib/places";
 import { BoroughPicker } from "./BoroughPicker";
 import { PostcodeFinder } from "./PostcodeFinder";
 import { YourWard } from "./YourWard";
@@ -23,7 +23,7 @@ export function HeroTop({
   return (
     <div className="hero-top">
       <div className="hero-switch">
-        <PostcodeFinder places={PLACES} covered={COVERED} example={example} here={current} label="Start with your postcode" compact />
+        <PostcodeFinder covered={COVERED} example={example} here={current} label="Start with your postcode" compact />
         <div className="hero-or">
           <span>or choose</span>
           <BoroughPicker current={current} boroughs={[HOME_BOROUGH, ...OTHER_BOROUGHS]} />

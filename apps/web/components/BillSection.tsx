@@ -1,6 +1,6 @@
 "use client";
 
-import { bandsOf, derive, worst, type Figure } from "@borough-ledger/schema";
+import { bandsOf, derive, worst, type Figure } from "@borough-ledger/schema/client";
 import { billFor, splitPence } from "@borough-ledger/engine";
 import type { PageModel } from "@/lib/model";
 import { Num } from "./Num";

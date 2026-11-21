@@ -2,11 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import { useId, useState } from "react";
-import { DecoderIndex } from "@borough-ledger/schema";
+import type { DecoderIndex } from "@borough-ledger/schema";
 import index from "../../../data/build/council_tax_decoder_index.json";
 import { POSTCODE_LOOKUP, normalisePostcode } from "@/lib/wardFinder";
 
-const COUNCILS = DecoderIndex.parse(index).councils;
+// Checked against the DecoderIndex schema in test/wards.test.ts; parsing it here would ship zod to every reader.
+const COUNCILS = (index as unknown as DecoderIndex).councils;
 
 /** Postcode to council, anywhere in England: the postcode goes to this site's own route, which asks postcodes.io and hands
     back only the council, and the page opens that council's decoded bill. The postcode is never kept, logged or put in an

@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { bandsOf, derive, fig, worst, type Figure, type Lever, type LeverId } from "@borough-ledger/schema";
+import type { Lever, LeverId } from "@borough-ledger/schema";
+import { bandsOf, derive, fig, worst, type Figure } from "@borough-ledger/schema/client";
 import { billFor, computeBalance, encodeScenario, leverValue, mediumTerm, nextYearCouncil, type MediumTermYear, type PartId } from "@borough-ledger/engine";
 import { balancePath, type PledgeTry } from "@/lib/balanceLink";
 import { formatLever } from "@/lib/format";
