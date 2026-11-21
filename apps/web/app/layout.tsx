@@ -1,9 +1,18 @@
 import type { Metadata, Viewport } from "next";
 import { feedAlternate } from "@/lib/rss";
-import { GeistSans } from "geist/font/sans";
+import localFont from "next/font/local";
 import { JsonLd } from "@/components/JsonLd";
 import { CONTACT, GOOGLE_SITE_VERIFICATION, INDEXABLE, MAKER, REPO, SITE, SITE_URL } from "@/lib/site";
 import "./globals.css";
+
+/** Geist, cut to Latin, punctuation and symbols (scripts/subset_font.py): 48 KB instead of the package's 70 KB, every
+ *  weight and OpenType feature kept. Same settings as `geist/font/sans`, so the page looks the same. */
+const GeistSans = localFont({
+  src: "./fonts/Geist-Variable-latin.woff2",
+  variable: "--font-geist-sans",
+  weight: "100 900",
+  display: "swap",
+});
 
 /** Who runs the site, on every page: an independent project, never the council (CLAUDE.md invariant 5). */
 const ORGANIZATION = {

@@ -846,6 +846,10 @@
     font-variant-numeric: tabular-nums;
     opacity: 0.6;
   }
+  /* On a pressed chip 0.6 gave 4.0:1 in dark mode (dark text on the light ink); 0.8 keeps it above 4.5:1 in both. */
+  .chip[aria-pressed="true"] .count {
+    opacity: 0.8;
+  }
 
   /* promises index (/promises) */
   section.plist-section {
