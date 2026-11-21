@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
-import { derive, worst, type Figure } from "@borough-ledger/schema";
+import { derive, worst, type Figure } from "@borough-ledger/schema/client";
 import { ratesBill } from "@borough-ledger/engine";
 import type { FlowLine } from "@/lib/model";
 import { ChartTable, DataTable } from "./ChartTable";

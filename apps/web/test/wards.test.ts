@@ -205,3 +205,24 @@ describe("postcode finder across boroughs", () => {
   });
 });
 
+
+describe("the finders' wards list", () => {
+  it("is served whole at /places.json, not built into each page", async () => {
+    const { GET } = await import("@/app/places.json/route");
+    const { PLACES } = await import("@/lib/places");
+    expect(await GET().json()).toEqual(JSON.parse(JSON.stringify(PLACES)));
+  });
+
+  it("is loaded alongside the postcode lookup, and a failed load reads as the service not answering", async () => {
+    const { PLACES } = await import("@/lib/places");
+    const hf = PLACES[0]!;
+    const w = hf.wards[0]!;
+    const lookup = (async () =>
+      Response.json({ result: [{ result: { postcode: "W6 9JU", admin_district: "Hammersmith and Fulham", codes: { admin_ward: w.ons_code, admin_district: hf.ons } } }] })) as unknown as typeof fetch;
+    const { lookupPlace } = await import("@/lib/wardFinder");
+    expect(await lookupPlace("w69ju", Promise.resolve(PLACES), lookup)).toMatchObject({ kind: "ward", href: w.href });
+    const failed = Promise.reject(new Error("places 500"));
+    failed.catch(() => {});
+    expect(await lookupPlace("w69ju", failed, lookup)).toEqual({ kind: "error" });
+  });
+});

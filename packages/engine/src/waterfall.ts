@@ -1,4 +1,5 @@
-import { isGapValueLine, type GapLine } from "@borough-ledger/schema";
+import type { GapLine } from "@borough-ledger/schema";
+import { isGapValueLine } from "@borough-ledger/schema/client";
 
 export interface WaterfallRow {
   label: string;

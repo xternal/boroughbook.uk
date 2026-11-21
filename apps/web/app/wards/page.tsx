@@ -1,6 +1,6 @@
 import { peopleUpdated } from "@/lib/updated";
 import type { Metadata } from "next";
-import { COVERED, PLACES } from "@/lib/places";
+import { COVERED } from "@/lib/places";
 import { JsonLd } from "@/components/JsonLd";
 import { PageShell } from "@/components/PageShell";
 import { WardFinder } from "@/components/WardFinder";
@@ -37,7 +37,7 @@ export default function WardsPage() {
           {formatDay(m.people.retrievedOn)}. Find your ward by postcode, or pick it on the map or the list.
         </p>
       </div>
-      <WardFinder places={PLACES} covered={COVERED} />
+      <WardFinder covered={COVERED} />
       <section aria-labelledby="wards-h" className="pay-section">
         <h2 id="wards-h" className="sr-only">
           Every ward and its councillors

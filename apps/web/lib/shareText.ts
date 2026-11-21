@@ -1,4 +1,4 @@
-import { worst, type Quality } from "@borough-ledger/schema";
+import { worst, type Quality } from "@borough-ledger/schema/client";
 import { defaultScenario, leverValue, mediumTerm, type Scenario } from "@borough-ledger/engine";
 import { format, formatLever } from "./format";
 import type { PageModel } from "./model";

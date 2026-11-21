@@ -1,5 +1,5 @@
 import type { PageModel } from "@/lib/model";
-import { COVERED, PLACES } from "@/lib/places";
+import { COVERED } from "@/lib/places";
 import { WardFinder } from "./WardFinder";
 import { SecTitle, type SectionView } from "./SecTitle";
 
@@ -20,7 +20,7 @@ export function WardSection({ m, view }: { m: PageModel; view?: SectionView }) {
           <a href="/wards">pick your ward on the map</a>.
         </p>
       </div>
-      <WardFinder places={PLACES} covered={COVERED} />
+      <WardFinder covered={COVERED} />
     </section>
   );
 }

@@ -84,7 +84,29 @@ export function placeFromResult(result: Result, places: readonly FinderPlace[]):
   return { kind: "elsewhere", district: result.admin_district ?? "another area", postcode, ...(result.codes?.admin_district ? { ons: result.codes.admin_district } : {}) };
 }
 
-export async function lookupPlace(input: string, places: readonly FinderPlace[], fetchImpl: typeof fetch = fetch): Promise<PlaceLookup> {
+/** Where the finders get every borough's wards (app/places.json): fetched on first use, not built into each page. */
+export const PLACES_URL = "/places.json";
+
+let placesOnce: Promise<readonly FinderPlace[]> | null = null;
+/** The places list, fetched once per page view; a failed fetch is forgotten so the next try asks again. */
+export function loadPlaces(fetchImpl: typeof fetch = fetch): Promise<readonly FinderPlace[]> {
+  placesOnce ??= fetchImpl(PLACES_URL)
+    .then((r) => {
+      if (!r.ok) throw new Error(`places ${r.status}`);
+      return r.json() as Promise<FinderPlace[]>;
+    })
+    .catch((e: unknown) => {
+      placesOnce = null;
+      throw e;
+    });
+  return placesOnce;
+}
+
+export async function lookupPlace(
+  input: string,
+  places: readonly FinderPlace[] | Promise<readonly FinderPlace[]>,
+  fetchImpl: typeof fetch = fetch,
+): Promise<PlaceLookup> {
   const postcode = normalisePostcode(input);
   if (!postcode) return { kind: "invalid" };
   try {
@@ -98,7 +120,7 @@ export async function lookupPlace(input: string, places: readonly FinderPlace[],
     });
     if (!res.ok) return { kind: "error" };
     const body = (await res.json()) as { result?: { result: Result }[] };
-    return placeFromResult(body.result?.[0]?.result ?? null, places);
+    return placeFromResult(body.result?.[0]?.result ?? null, await places);
   } catch {
     return { kind: "error" };
   }

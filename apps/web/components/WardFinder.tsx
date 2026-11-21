@@ -2,11 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { useId, useState } from "react";
-import { lookupPlace, type FinderPlace, type PlaceLookup } from "@/lib/wardFinder";
+import { loadPlaces, lookupPlace, type PlaceLookup } from "@/lib/wardFinder";
 
 /** Postcode to ward, in any borough on the site. The postcode goes to the site's own lookup (app/api/postcode), which asks
  *  postcodes.io and keeps nothing; it never reaches the address bar. */
-export function WardFinder({ places, covered }: { places: FinderPlace[]; covered: string }) {
+export function WardFinder({ covered }: { covered: string }) {
   const router = useRouter();
   const id = useId();
   const [value, setValue] = useState("");
@@ -38,6 +38,9 @@ export function WardFinder({ places, covered }: { places: FinderPlace[]; covered
       onSubmit={async (e) => {
         e.preventDefault();
         setBusy(true);
+        // The wards list loads alongside the postcode lookup; a failure to load it reads as "the service did not answer".
+        const places = loadPlaces();
+        places.catch(() => {});
         const r = await lookupPlace(value, places);
         setResult(r);
         setBusy(false);
@@ -56,6 +59,7 @@ export function WardFinder({ places, covered }: { places: FinderPlace[]; covered
           placeholder="W6 9JU"
           maxLength={10}
           value={value}
+          onFocus={() => loadPlaces().catch(() => {})}
           onChange={(e) => {
             setValue(e.target.value);
             setResult(null);

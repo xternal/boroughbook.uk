@@ -1,6 +1,6 @@
 "use client";
 
-import { bandsOf, derive, type Figure } from "@borough-ledger/schema";
+import { bandsOf, derive, type Figure } from "@borough-ledger/schema/client";
 import { billFor } from "@borough-ledger/engine";
 import { optionName } from "@/lib/ctOptions";
 import type { CtOptionsModel, PageModel } from "@/lib/model";
