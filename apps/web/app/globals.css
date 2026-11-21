@@ -429,8 +429,13 @@
     align-items: flex-start;
     gap: 10px 18px;
   }
+  .hero-switch {
+    position: relative;
+  }
   .hero-switch .finder {
-    flex: 1 1 320px;
+    /* Never more than the line it is on, or a 320 px phone scrolls sideways. */
+    flex: 1 1 min(320px, 100%);
+    min-width: 0;
     max-width: 440px;
     margin: 0;
   }
@@ -442,6 +447,8 @@
     font-size: 13px;
     color: var(--muted);
     padding-top: 26px;
+    /* On the narrowest phones the borough button goes under "or choose" instead of off the screen. */
+    flex-wrap: wrap;
   }
   .your-ward {
     font-size: 14px;
@@ -496,8 +503,9 @@
     z-index: 30;
     top: calc(100% + 6px);
     left: 0;
-    min-width: 300px;
-    max-width: calc(100vw - 32px);
+    /* Never wider than the screen less its margins, so it cannot push the page sideways on a 320 px phone. */
+    min-width: min(300px, calc(100vw - 48px));
+    max-width: calc(100vw - 48px);
     max-height: min(70vh, 560px);
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -521,6 +529,13 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--muted);
+  }
+  /* On phones and tablets the borough list opens from the left edge of its row, so it never runs off the screen
+     when the button sits at the right-hand end of the line. */
+  @media (max-width: 900px) {
+    .hero-switch .picker {
+      position: static;
+    }
   }
   .picker-panel > div + div {
     margin-top: 4px;
@@ -610,6 +625,11 @@
     letter-spacing: -0.03em;
     line-height: 1.1;
     white-space: nowrap;
+  }
+  /* A party's name, not a figure: it may wrap, so "No overall control" fits a two-column phone row. */
+  .kpi .v-text {
+    white-space: normal;
+    text-wrap: balance;
   }
   .kpi .s {
     font-size: 12.5px;
@@ -2188,6 +2208,8 @@
   /* wards: postcode finder, map, ward pages */
   .finder {
     display: grid;
+    /* The postcode box's natural width must not set the column, or the form overflows a 320 px phone. */
+    grid-template-columns: minmax(0, 1fr);
     gap: 6px;
     max-width: 520px;
     margin-bottom: 8px;
@@ -3299,6 +3321,7 @@
   /* Your postcode, in a card. */
   .fs-ward .hero-top {
     margin: 0;
+    grid-template-columns: minmax(0, 1fr);
   }
   .fs-ward .hero-switch .finder {
     flex-basis: 100%;

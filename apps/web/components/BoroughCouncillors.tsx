@@ -38,13 +38,13 @@ export function ControlKpi({ P }: { P: BoroughPeople }) {
   return (P.mayor ? (
     <div className="kpi">
       <span className="l">Run by an elected mayor</span>
-      <span className="v">{shortOf.get(P.mayor.party_id) ?? P.mayor.party}</span>
+      <span className="v v-text">{shortOf.get(P.mayor.party_id) ?? P.mayor.party}</span>
       <span className="s">{P.mayor.name}</span>
     </div>
   ) : (
     <div className="kpi">
       <span className="l">Council control</span>
-      <span className="v">{control?.short ?? "No overall control"}</span>
+      <span className="v v-text">{control?.short ?? "No overall control"}</span>
       <span className="s">
         {control ? (
           <>
